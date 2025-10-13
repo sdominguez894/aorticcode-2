@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Logo from "@/components/Logo";
 import LanguageSelector from "@/components/LanguageSelector";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -25,11 +26,24 @@ const Index = () => {
     <div className="min-h-screen bg-background bg-gradient-radial">
       {/* Header */}
       <header className="border-b bg-card/50 backdrop-blur-md sticky top-0 z-50 shadow-soft">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Logo />
-          <div className="flex items-center gap-3">
-            <ThemeToggle />
-            <LanguageSelector />
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <Logo />
+            <nav className="hidden md:flex items-center gap-6">
+              <Link to="/" className="text-sm font-medium text-primary transition-colors">
+                Home
+              </Link>
+              <Link to="/about" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+                About us
+              </Link>
+              <Link to="/legal" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+                Legal notice
+              </Link>
+            </nav>
+            <div className="flex items-center gap-3">
+              <ThemeToggle />
+              <LanguageSelector />
+            </div>
           </div>
         </div>
       </header>
