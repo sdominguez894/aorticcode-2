@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Logo from "@/components/Logo";
 import LanguageSelector from "@/components/LanguageSelector";
+import ThemeToggle from "@/components/ThemeToggle";
 import MeasurementForm from "@/components/MeasurementForm";
 import AnatomicalDiagram from "@/components/AnatomicalDiagram";
 import ResultsCard from "@/components/ResultsCard";
@@ -26,7 +27,10 @@ const Index = () => {
       <header className="border-b bg-card/50 backdrop-blur-md sticky top-0 z-50 shadow-soft">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Logo />
-          <LanguageSelector />
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            <LanguageSelector />
+          </div>
         </div>
       </header>
 
