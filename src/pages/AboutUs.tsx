@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Logo from "@/components/Logo";
 import LanguageSelector from "@/components/LanguageSelector";
 import ThemeToggle from "@/components/ThemeToggle";
 import { Users, Stethoscope, Code } from "lucide-react";
 
 const AboutUs = () => {
+  const { t } = useTranslation();
+  
   return (
     <div className="min-h-screen bg-background bg-gradient-radial">
       {/* Header */}
@@ -14,13 +17,13 @@ const AboutUs = () => {
             <Logo />
             <nav className="hidden md:flex items-center gap-6">
               <Link to="/" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-                Home
+                {t('nav.home')}
               </Link>
               <Link to="/about" className="text-sm font-medium text-primary transition-colors">
-                About us
+                {t('nav.about')}
               </Link>
               <Link to="/legal" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-                Legal notice
+                {t('nav.legal')}
               </Link>
             </nav>
             <div className="flex items-center gap-3">
@@ -37,11 +40,10 @@ const AboutUs = () => {
           {/* Hero Section */}
           <div className="text-center mb-12 animate-fade-in">
             <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent">
-              About Aortic Code
+              {t('about.title')}
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              A collaborative effort between medical professionals and engineering experts to provide 
-              accurate aortic measurement calculations.
+              {t('about.subtitle')}
             </p>
           </div>
 
@@ -53,15 +55,10 @@ const AboutUs = () => {
                 <div className="p-3 rounded-lg bg-medical-blue/10">
                   <Stethoscope className="h-6 w-6 text-medical-blue" />
                 </div>
-                <h2 className="text-2xl font-bold">Medical Team</h2>
+                <h2 className="text-2xl font-bold">{t('about.medicalTeam.title')}</h2>
               </div>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                Our medical team consists of experienced cardiologists and cardiovascular specialists 
-                who ensure the accuracy and clinical relevance of all calculations.
-              </p>
               <p className="text-muted-foreground leading-relaxed">
-                With decades of combined experience in aortic pathologies and cardiovascular imaging, 
-                they provide the clinical expertise that makes this tool reliable for medical professionals.
+                {t('about.medicalTeam.description')}
               </p>
             </div>
 
@@ -71,15 +68,10 @@ const AboutUs = () => {
                 <div className="p-3 rounded-lg bg-medical-teal/10">
                   <Code className="h-6 w-6 text-medical-teal" />
                 </div>
-                <h2 className="text-2xl font-bold">Engineering Team</h2>
+                <h2 className="text-2xl font-bold">{t('about.engineeringTeam.title')}</h2>
               </div>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                Our engineering team brings expertise in medical software development, ensuring 
-                the platform is secure, accessible, and user-friendly.
-              </p>
               <p className="text-muted-foreground leading-relaxed">
-                They focus on creating intuitive interfaces and reliable calculations that medical 
-                professionals can trust in their daily practice.
+                {t('about.engineeringTeam.description')}
               </p>
             </div>
           </div>
@@ -90,16 +82,10 @@ const AboutUs = () => {
               <div className="p-3 rounded-lg bg-accent/10">
                 <Users className="h-6 w-6 text-accent" />
               </div>
-              <h2 className="text-2xl font-bold">Our Mission</h2>
+              <h2 className="text-2xl font-bold">{t('about.mission.title')}</h2>
             </div>
-            <p className="text-muted-foreground leading-relaxed mb-4">
-              Aortic Code was developed to provide medical professionals with a reliable, easy-to-use 
-              tool for aortic measurements and calculations. Our goal is to support clinical decision-making 
-              with accurate, evidence-based calculations.
-            </p>
             <p className="text-muted-foreground leading-relaxed">
-              By combining medical expertise with modern engineering practices, we strive to create 
-              tools that enhance patient care and support healthcare professionals in their daily work.
+              {t('about.mission.description')}
             </p>
           </div>
         </div>
@@ -108,7 +94,7 @@ const AboutUs = () => {
       {/* Footer */}
       <footer className="border-t bg-card/30 backdrop-blur-sm mt-16">
         <div className="container mx-auto px-4 py-6 text-center text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} Aortic Code. Eina professional per a professionals mèdics.</p>
+          <p>© {new Date().getFullYear()} Aortic Code. {t('home.footer')}</p>
         </div>
       </footer>
     </div>

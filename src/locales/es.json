@@ -1,0 +1,49 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "about": "Sobre nosotros",
+    "legal": "Aviso legal"
+  },
+  "home": {
+    "title": "Calculadora del Código Aórtico",
+    "subtitle": "Herramienta profesional para la planificación de mediciones aórticas",
+    "footer": "Desarrollado con cuidado por profesionales médicos y de ingeniería"
+  },
+  "about": {
+    "title": "Sobre nosotros",
+    "subtitle": "Conoce al equipo detrás del Código Aórtico",
+    "mission": {
+      "title": "Nuestra misión",
+      "description": "El Código Aórtico es una herramienta profesional desarrollada para ayudar a los profesionales médicos en la planificación y evaluación precisa de mediciones aórticas. Nos esforzamos por proporcionar cálculos fiables y presentaciones claras de datos para apoyar la toma de decisiones clínicas."
+    },
+    "medicalTeam": {
+      "title": "Equipo médico",
+      "description": "Nuestro equipo médico aporta décadas de experiencia combinada en cirugía cardiovascular y medicina vascular. Han trabajado en instituciones médicas de primer nivel y continúan dando forma a las mejores prácticas en el campo."
+    },
+    "engineeringTeam": {
+      "title": "Equipo de ingeniería",
+      "description": "El equipo de ingeniería combina experiencia en desarrollo de software médico, visualización de datos y diseño de experiencia de usuario. Están comprometidos a crear herramientas intuitivas y fiables que apoyen los flujos de trabajo clínicos."
+    }
+  },
+  "legal": {
+    "title": "Aviso legal",
+    "subtitle": "Información importante y limitaciones de responsabilidad",
+    "lastUpdated": "Última actualización",
+    "medicalDisclaimer": {
+      "title": "Aviso médico",
+      "content": "Esta herramienta está diseñada para ayudar a los profesionales de la salud en su práctica clínica. No está destinada a reemplazar el juicio clínico profesional ni la consulta con especialistas apropiados. Todas las decisiones de tratamiento deben basarse en una evaluación completa del paciente y en la consulta con profesionales cualificados."
+    },
+    "liability": {
+      "title": "Limitación de responsabilidad",
+      "content": "Los desarrolladores y contribuyentes de esta herramienta no serán responsables de ningún daño directo, indirecto, incidental, especial, consecuente o ejemplar que resulte del uso de esta aplicación. Los usuarios asumen toda la responsabilidad por el uso de esta herramienta en su práctica profesional."
+    },
+    "professionalUse": {
+      "title": "Solo uso profesional",
+      "content": "Esta herramienta está destinada exclusivamente al uso por parte de profesionales de la salud cualificados y con licencia. No está diseñada para uso público o para pacientes que intenten autodiagnosticarse o planificar su propio tratamiento."
+    },
+    "accuracy": {
+      "title": "Precisión y actualizaciones",
+      "content": "Aunque se han realizado esfuerzos razonables para garantizar la precisión de los cálculos y la información proporcionada, no se hacen garantías sobre la integridad o la actualidad de la información. Consulte siempre con las directrices clínicas y la literatura médica actuales."
+    }
+  }
+}

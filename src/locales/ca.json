@@ -1,0 +1,49 @@
+{
+  "nav": {
+    "home": "Inici",
+    "about": "Sobre nosaltres",
+    "legal": "Avís legal"
+  },
+  "home": {
+    "title": "Calculadora del Codi Aòrtic",
+    "subtitle": "Eina professional per a la planificació de mesuraments aòrtics",
+    "footer": "Desenvolupat amb cura per professionals mèdics i d'enginyeria"
+  },
+  "about": {
+    "title": "Sobre nosaltres",
+    "subtitle": "Coneix l'equip darrere del Codi Aòrtic",
+    "mission": {
+      "title": "La nostra missió",
+      "description": "El Codi Aòrtic és una eina professional desenvolupada per ajudar els professionals mèdics en la planificació i avaluació precisa de mesuraments aòrtics. Ens esforcem per proporcionar càlculs fiables i presentacions clares de dades per donar suport a la presa de decisions clíniques."
+    },
+    "medicalTeam": {
+      "title": "Equip mèdic",
+      "description": "El nostre equip mèdic aporta dècades d'experiència combinada en cirurgia cardiovascular i medicina vascular. Han treballat en institucions mèdiques de primer nivell i continuen donant forma a la millor pràctica en el camp."
+    },
+    "engineeringTeam": {
+      "title": "Equip d'enginyeria",
+      "description": "L'equip d'enginyeria combina experiència en desenvolupament de programari mèdic, visualització de dades i disseny d'experiència d'usuari. Estan compromesos a crear eines intuïtives i fiables que donin suport als fluxos de treball clínics."
+    }
+  },
+  "legal": {
+    "title": "Avís legal",
+    "subtitle": "Informació important i limitacions de responsabilitat",
+    "lastUpdated": "Última actualització",
+    "medicalDisclaimer": {
+      "title": "Avís mèdic",
+      "content": "Aquesta eina està dissenyada per ajudar els professionals de la salut en la seva pràctica clínica. No està destinada a substituir el judici clínic professional ni la consulta amb especialistes apropiats. Totes les decisions de tractament han de basar-se en una avaluació completa del pacient i en la consulta amb professionals qualificats."
+    },
+    "liability": {
+      "title": "Limitació de responsabilitat",
+      "content": "Els desenvolupadors i contribuïdors d'aquesta eina no seran responsables de cap dany directe, indirecte, incidental, especial, conseqüent o exemplar que resulti de l'ús d'aquesta aplicació. Els usuaris assumeixen tota la responsabilitat per l'ús d'aquesta eina en la seva pràctica professional."
+    },
+    "professionalUse": {
+      "title": "Només ús professional",
+      "content": "Aquesta eina està destinada exclusivament a l'ús per part de professionals de la salut qualificats i amb llicència. No està dissenyada per a l'ús públic o per a pacients que intenten autodiagnosticar-se o planificar el seu propi tractament."
+    },
+    "accuracy": {
+      "title": "Precisió i actualitzacions",
+      "content": "Tot i que s'han fet esforços raonables per garantir la precisió dels càlculs i les informacions proporcionades, no es fan garanties sobre la integritat o l'actualitat de la informació. Consulteu sempre amb les directrius clíniques i la literatura mèdica actuals."
+    }
+  }
+}

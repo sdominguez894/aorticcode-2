@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Logo from "@/components/Logo";
 import LanguageSelector from "@/components/LanguageSelector";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -16,6 +17,7 @@ type MeasurementData = {
 };
 
 const Index = () => {
+  const { t } = useTranslation();
   const [calculatedMeasurements, setCalculatedMeasurements] = useState<MeasurementData | null>(null);
 
   const handleCalculate = (data: MeasurementData) => {
@@ -31,13 +33,13 @@ const Index = () => {
             <Logo />
             <nav className="hidden md:flex items-center gap-6">
               <Link to="/" className="text-sm font-medium text-primary transition-colors">
-                Home
+                {t('nav.home')}
               </Link>
               <Link to="/about" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-                About us
+                {t('nav.about')}
               </Link>
               <Link to="/legal" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-                Legal notice
+                {t('nav.legal')}
               </Link>
             </nav>
             <div className="flex items-center gap-3">
@@ -71,7 +73,7 @@ const Index = () => {
       {/* Footer */}
       <footer className="border-t bg-card/30 backdrop-blur-sm mt-16">
         <div className="container mx-auto px-4 py-6 text-center text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} Aortic Code. Eina professional per a professionals mèdics.</p>
+          <p>© {new Date().getFullYear()} Aortic Code. {t('home.footer')}</p>
         </div>
       </footer>
     </div>

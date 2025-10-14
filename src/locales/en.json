@@ -1,0 +1,49 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About us",
+    "legal": "Legal notice"
+  },
+  "home": {
+    "title": "Aortic Code Calculator",
+    "subtitle": "Professional tool for aortic measurement planning",
+    "footer": "Developed with care by medical and engineering professionals"
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "Meet the team behind Aortic Code",
+    "mission": {
+      "title": "Our Mission",
+      "description": "Aortic Code is a professional tool developed to assist medical professionals in accurate aortic measurement planning and assessment. We strive to provide reliable calculations and clear data presentations to support clinical decision-making."
+    },
+    "medicalTeam": {
+      "title": "Medical Team",
+      "description": "Our medical team brings decades of combined experience in cardiovascular surgery and vascular medicine. They have worked at top-tier medical institutions and continue to shape best practices in the field."
+    },
+    "engineeringTeam": {
+      "title": "Engineering Team",
+      "description": "The engineering team combines expertise in medical software development, data visualization, and user experience design. They are committed to creating intuitive, reliable tools that support clinical workflows."
+    }
+  },
+  "legal": {
+    "title": "Legal Notice",
+    "subtitle": "Important information and disclaimers",
+    "lastUpdated": "Last updated",
+    "medicalDisclaimer": {
+      "title": "Medical Disclaimer",
+      "content": "This tool is designed to assist healthcare professionals in their clinical practice. It is not intended to replace professional clinical judgment or consultation with appropriate specialists. All treatment decisions should be based on comprehensive patient assessment and consultation with qualified professionals."
+    },
+    "liability": {
+      "title": "Limitation of Liability",
+      "content": "The developers and contributors of this tool shall not be liable for any direct, indirect, incidental, special, consequential, or exemplary damages resulting from the use of this application. Users assume all responsibility for the use of this tool in their professional practice."
+    },
+    "professionalUse": {
+      "title": "Professional Use Only",
+      "content": "This tool is intended solely for use by qualified, licensed healthcare professionals. It is not designed for public use or for patients attempting to self-diagnose or plan their own treatment."
+    },
+    "accuracy": {
+      "title": "Accuracy and Updates",
+      "content": "While reasonable efforts have been made to ensure the accuracy of calculations and information provided, no warranties are made regarding the completeness or currentness of the information. Always consult current clinical guidelines and medical literature."
+    }
+  }
+}
