@@ -45,5 +45,37 @@
       "title": "Precisión y actualizaciones",
       "content": "Aunque se han realizado esfuerzos razonables para garantizar la precisión de los cálculos y la información proporcionada, no se hacen garantías sobre la integridad o la actualidad de la información. Consulte siempre con las directrices clínicas y la literatura médica actuales."
     }
+  },
+  "form": {
+    "title": "Medidas del Paciente",
+    "description": "Introduce las medidas anatómicas en los campos inferiores para obtener la prótesis EVAR adecuada.",
+    "neckDiameter": "Diámetro del cuello del aneurisma (mm)",
+    "contralateralDiameter": "Diámetro de sellado ilíaco contralateral (mm)",
+    "ipsilateralDiameter": "Diámetro de sellado ilíaco ipsilateral (mm)",
+    "contralateralDistance": "Distancia desde el cuello hasta el sellado distal contralateral (mm)",
+    "ipsilateralDistance": "Distancia desde el cuello hasta el sellado distal ipsilateral (mm)",
+    "calculateButton": "Calcular Prótesis",
+    "validationError": "Por favor, introduce todos los valores correctamente",
+    "calculationSuccess": "Cálculo completado"
+  },
+  "diagram": {
+    "title": "Diagrama de las medidas del paciente",
+    "description": "Los valores introducidos en los campos se mostrarán automáticamente en la imagen de referencia."
+  },
+  "results": {
+    "title": "Resultados y Recomendaciones",
+    "description": "Recomendaciones basadas en las medidas del paciente",
+    "waitingTitle": "Resultados y Recomendaciones",
+    "waitingDescription": "Introduce las medidas del paciente y haz clic en \"Calcular Prótesis\" para obtener las recomendaciones.",
+    "waitingCalculation": "Esperando cálculo...",
+    "mainBody": "Cuerpo Principal",
+    "basedOnNeck": "Basado en diámetro del cuello",
+    "contralateralLimb": "Rama Contralateral",
+    "ipsilateralLimb": "Rama Ipsilateral",
+    "length": "Longitud",
+    "clinicalNotes": "Notas Clínicas",
+    "note1": "Medidas dentro del rango aceptable para EVAR",
+    "note2": "Sobredimensionamiento del 15% aplicado",
+    "note3": "Verifica disponibilidad de medidas con el fabricante"
   }
 }

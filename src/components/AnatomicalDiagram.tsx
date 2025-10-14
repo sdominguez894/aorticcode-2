@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 type MeasurementData = {
@@ -13,12 +14,14 @@ type AnatomicalDiagramProps = {
 };
 
 const AnatomicalDiagram = ({ measurements }: AnatomicalDiagramProps) => {
+  const { t } = useTranslation();
+  
   return (
     <Card className="w-full shadow-glass backdrop-blur-glass animate-slide-up" style={{ animationDelay: "0.1s" }}>
       <CardHeader>
-        <CardTitle className="text-2xl">📐 Diagrama de les mesures del pacient</CardTitle>
+        <CardTitle className="text-2xl">📐 {t('diagram.title')}</CardTitle>
         <CardDescription>
-          Els valors introduïts als camps es mostraran automàticament en la imatge de referència.
+          {t('diagram.description')}
         </CardDescription>
       </CardHeader>
       <CardContent className="flex items-center justify-center p-8">

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,6 +20,7 @@ type MeasurementFormProps = {
 };
 
 const MeasurementForm = ({ onCalculate }: MeasurementFormProps) => {
+  const { t } = useTranslation();
   const [measurements, setMeasurements] = useState<MeasurementData>({
     neckDiameter: "24.5",
     contralateralDiameter: "18.0",
@@ -33,12 +35,12 @@ const MeasurementForm = ({ onCalculate }: MeasurementFormProps) => {
     // Basic validation
     const values = Object.values(measurements);
     if (values.some(v => !v || parseFloat(v) <= 0)) {
-      toast.error("Si us plau, introdueix tots els valors correctament");
+      toast.error(t('form.validationError'));
       return;
     }
     
     onCalculate(measurements);
-    toast.success("Càlcul completat");
+    toast.success(t('form.calculationSuccess'));
   };
 
   const handleInputChange = (field: keyof MeasurementData, value: string) => {
@@ -48,9 +50,9 @@ const MeasurementForm = ({ onCalculate }: MeasurementFormProps) => {
   return (
     <Card className="w-full shadow-glass backdrop-blur-glass animate-slide-up">
       <CardHeader>
-        <CardTitle className="text-2xl">📏 Mesures del Pacient</CardTitle>
+        <CardTitle className="text-2xl">📏 {t('form.title')}</CardTitle>
         <CardDescription>
-          Introdueix les mesures anatòmiques als camps inferiors per obtenir la pròtesi EVAR adequada.
+          {t('form.description')}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -58,7 +60,7 @@ const MeasurementForm = ({ onCalculate }: MeasurementFormProps) => {
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="neckDiameter" className="text-base font-medium">
-                Diàmetre del coll de l'aneurisma (mm)
+                {t('form.neckDiameter')}
               </Label>
               <Input
                 id="neckDiameter"
@@ -66,14 +68,14 @@ const MeasurementForm = ({ onCalculate }: MeasurementFormProps) => {
                 step="0.1"
                 value={measurements.neckDiameter}
                 onChange={(e) => handleInputChange("neckDiameter", e.target.value)}
-                placeholder="Ej: 24.5"
+                placeholder="24.5"
                 className="text-base border-2 focus:border-primary transition-colors"
               />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="contralateralDiameter" className="text-base font-medium">
-                Diàmetre de segellat ilíac contralateral (mm)
+                {t('form.contralateralDiameter')}
               </Label>
               <Input
                 id="contralateralDiameter"
@@ -81,14 +83,14 @@ const MeasurementForm = ({ onCalculate }: MeasurementFormProps) => {
                 step="0.1"
                 value={measurements.contralateralDiameter}
                 onChange={(e) => handleInputChange("contralateralDiameter", e.target.value)}
-                placeholder="Ej: 18.0"
+                placeholder="18.0"
                 className="text-base border-2 focus:border-secondary transition-colors"
               />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="ipsilateralDiameter" className="text-base font-medium">
-                Diàmetre de segellat ilíac ipsilateral (mm)
+                {t('form.ipsilateralDiameter')}
               </Label>
               <Input
                 id="ipsilateralDiameter"
@@ -96,14 +98,14 @@ const MeasurementForm = ({ onCalculate }: MeasurementFormProps) => {
                 step="0.1"
                 value={measurements.ipsilateralDiameter}
                 onChange={(e) => handleInputChange("ipsilateralDiameter", e.target.value)}
-                placeholder="Ej: 16.5"
+                placeholder="16.5"
                 className="text-base border-2 focus:border-accent transition-colors"
               />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="contralateralDistance" className="text-base font-medium">
-                Distància des del coll fins al segellat distal contralateral (mm)
+                {t('form.contralateralDistance')}
               </Label>
               <Input
                 id="contralateralDistance"
@@ -111,14 +113,14 @@ const MeasurementForm = ({ onCalculate }: MeasurementFormProps) => {
                 step="0.1"
                 value={measurements.contralateralDistance}
                 onChange={(e) => handleInputChange("contralateralDistance", e.target.value)}
-                placeholder="Ej: 150"
+                placeholder="150"
                 className="text-base border-2 focus:border-medical-blue transition-colors"
               />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="ipsilateralDistance" className="text-base font-medium">
-                Distància des del coll fins al segellat distal ipsilateral (mm)
+                {t('form.ipsilateralDistance')}
               </Label>
               <Input
                 id="ipsilateralDistance"
@@ -126,7 +128,7 @@ const MeasurementForm = ({ onCalculate }: MeasurementFormProps) => {
                 step="0.1"
                 value={measurements.ipsilateralDistance}
                 onChange={(e) => handleInputChange("ipsilateralDistance", e.target.value)}
-                placeholder="Ej: 145"
+                placeholder="145"
                 className="text-base border-2 focus:border-medical-teal transition-colors"
               />
             </div>
@@ -138,7 +140,7 @@ const MeasurementForm = ({ onCalculate }: MeasurementFormProps) => {
             className="w-full bg-gradient-primary hover:opacity-90 transition-all transform hover:scale-[1.02]"
           >
             <Calculator className="mr-2 h-5 w-5" />
-            Calcular Pròtesi
+            {t('form.calculateButton')}
           </Button>
         </form>
       </CardContent>

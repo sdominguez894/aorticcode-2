@@ -45,5 +45,37 @@
       "title": "Precisió i actualitzacions",
       "content": "Tot i que s'han fet esforços raonables per garantir la precisió dels càlculs i les informacions proporcionades, no es fan garanties sobre la integritat o l'actualitat de la informació. Consulteu sempre amb les directrius clíniques i la literatura mèdica actuals."
     }
+  },
+  "form": {
+    "title": "Mesures del Pacient",
+    "description": "Introdueix les mesures anatòmiques als camps inferiors per obtenir la pròtesi EVAR adequada.",
+    "neckDiameter": "Diàmetre del coll de l'aneurisma (mm)",
+    "contralateralDiameter": "Diàmetre de segellat ilíac contralateral (mm)",
+    "ipsilateralDiameter": "Diàmetre de segellat ilíac ipsilateral (mm)",
+    "contralateralDistance": "Distància des del coll fins al segellat distal contralateral (mm)",
+    "ipsilateralDistance": "Distància des del coll fins al segellat distal ipsilateral (mm)",
+    "calculateButton": "Calcular Pròtesi",
+    "validationError": "Si us plau, introdueix tots els valors correctament",
+    "calculationSuccess": "Càlcul completat"
+  },
+  "diagram": {
+    "title": "Diagrama de les mesures del pacient",
+    "description": "Els valors introduïts als camps es mostraran automàticament en la imatge de referència."
+  },
+  "results": {
+    "title": "Resultats i Recomanacions",
+    "description": "Recomanacions basades en les mesures del pacient",
+    "waitingTitle": "Resultats i Recomanacions",
+    "waitingDescription": "Introdueix les mesures del pacient i fes clic a \"Calcular Pròtesi\" per obtenir les recomanacions.",
+    "waitingCalculation": "Esperant càlcul...",
+    "mainBody": "Cos Principal",
+    "basedOnNeck": "Basat en diàmetre del coll",
+    "contralateralLimb": "Branca Contralateral",
+    "ipsilateralLimb": "Branca Ipsilateral",
+    "length": "Longitud",
+    "clinicalNotes": "Notes Clíniques",
+    "note1": "Mesures dins del rang acceptable per EVAR",
+    "note2": "Sobredimensionament del 15% aplicat",
+    "note3": "Verifica disponibilitat de mides amb el fabricant"
   }
 }

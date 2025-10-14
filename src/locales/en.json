@@ -45,5 +45,37 @@
       "title": "Accuracy and Updates",
       "content": "While reasonable efforts have been made to ensure the accuracy of calculations and information provided, no warranties are made regarding the completeness or currentness of the information. Always consult current clinical guidelines and medical literature."
     }
+  },
+  "form": {
+    "title": "Patient Measurements",
+    "description": "Enter the anatomical measurements in the fields below to obtain the appropriate EVAR prosthesis.",
+    "neckDiameter": "Aneurysm neck diameter (mm)",
+    "contralateralDiameter": "Contralateral iliac sealing diameter (mm)",
+    "ipsilateralDiameter": "Ipsilateral iliac sealing diameter (mm)",
+    "contralateralDistance": "Distance from neck to contralateral distal sealing (mm)",
+    "ipsilateralDistance": "Distance from neck to ipsilateral distal sealing (mm)",
+    "calculateButton": "Calculate Prosthesis",
+    "validationError": "Please enter all values correctly",
+    "calculationSuccess": "Calculation completed"
+  },
+  "diagram": {
+    "title": "Patient measurements diagram",
+    "description": "The values entered in the fields will be automatically displayed in the reference image."
+  },
+  "results": {
+    "title": "Results and Recommendations",
+    "description": "Recommendations based on patient measurements",
+    "waitingTitle": "Results and Recommendations",
+    "waitingDescription": "Enter the patient measurements and click \"Calculate Prosthesis\" to get the recommendations.",
+    "waitingCalculation": "Waiting for calculation...",
+    "mainBody": "Main Body",
+    "basedOnNeck": "Based on neck diameter",
+    "contralateralLimb": "Contralateral Limb",
+    "ipsilateralLimb": "Ipsilateral Limb",
+    "length": "Length",
+    "clinicalNotes": "Clinical Notes",
+    "note1": "Measurements within acceptable range for EVAR",
+    "note2": "15% oversizing applied",
+    "note3": "Verify size availability with manufacturer"
   }
 }
