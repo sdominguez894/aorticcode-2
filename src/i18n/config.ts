@@ -6,6 +6,11 @@ import ca from "@/locales/ca.json";
 import es from "@/locales/es.json";
 import en from "@/locales/en.json";
 
+/**
+ * i18n configuration
+ * Configures internationalization with Catalan, Spanish, and English support
+ * Includes automatic language detection from localStorage and browser settings
+ */
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)

@@ -1,5 +1,9 @@
 import type { Config } from "tailwindcss";
 
+/**
+ * Tailwind CSS configuration
+ * Defines design tokens, theme extensions, and custom animations
+ */
 export default {
   darkMode: ["class"],
   content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],

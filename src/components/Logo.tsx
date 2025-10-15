@@ -1,3 +1,7 @@
+/**
+ * Logo component
+ * Displays the AORTIC CODE branding with animated SVG waves
+ */
 const Logo = () => {
   return (
     <div className="flex items-center gap-3">

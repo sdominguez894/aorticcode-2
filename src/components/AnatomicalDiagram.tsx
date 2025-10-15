@@ -1,18 +1,30 @@
 import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
+/** Measurement data structure */
 type MeasurementData = {
+  /** Neck diameter in mm */
   neckDiameter: string;
+  /** Contralateral iliac diameter in mm */
   contralateralDiameter: string;
+  /** Ipsilateral iliac diameter in mm */
   ipsilateralDiameter: string;
+  /** Distance to contralateral iliac in mm */
   contralateralDistance: string;
+  /** Distance to ipsilateral iliac in mm */
   ipsilateralDistance: string;
 };
 
+/** Props for AnatomicalDiagram component */
 type AnatomicalDiagramProps = {
+  /** Measurement data to display on diagram */
   measurements: MeasurementData | null;
 };
 
+/**
+ * Anatomical diagram component
+ * Renders an SVG visualization of aortic aneurysm with measurement overlays
+ */
 const AnatomicalDiagram = ({ measurements }: AnatomicalDiagramProps) => {
   const { t } = useTranslation();
   

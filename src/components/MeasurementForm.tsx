@@ -7,18 +7,30 @@ import { Button } from "@/components/ui/button";
 import { Calculator } from "lucide-react";
 import { toast } from "sonner";
 
+/** Measurement data structure */
 type MeasurementData = {
+  /** Neck diameter in mm */
   neckDiameter: string;
+  /** Contralateral iliac diameter in mm */
   contralateralDiameter: string;
+  /** Ipsilateral iliac diameter in mm */
   ipsilateralDiameter: string;
+  /** Distance to contralateral iliac in mm */
   contralateralDistance: string;
+  /** Distance to ipsilateral iliac in mm */
   ipsilateralDistance: string;
 };
 
+/** Props for MeasurementForm component */
 type MeasurementFormProps = {
+  /** Callback function triggered when form is submitted */
   onCalculate: (data: MeasurementData) => void;
 };
 
+/**
+ * Measurement form component
+ * Collects anatomical measurements for EVAR prosthesis calculation
+ */
 const MeasurementForm = ({ onCalculate }: MeasurementFormProps) => {
   const { t } = useTranslation();
   const [measurements, setMeasurements] = useState<MeasurementData>({
@@ -29,6 +41,10 @@ const MeasurementForm = ({ onCalculate }: MeasurementFormProps) => {
     ipsilateralDistance: "145",
   });
 
+  /**
+   * Handles form submission and validation
+   * @param e - Form event
+   */
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -43,6 +59,11 @@ const MeasurementForm = ({ onCalculate }: MeasurementFormProps) => {
     toast.success(t('form.calculationSuccess'));
   };
 
+  /**
+   * Updates measurement field value
+   * @param field - Field name to update
+   * @param value - New value for the field
+   */
   const handleInputChange = (field: keyof MeasurementData, value: string) => {
     setMeasurements(prev => ({ ...prev, [field]: value }));
   };

@@ -2,18 +2,30 @@ import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle2, AlertCircle } from "lucide-react";
 
+/** Measurement data structure */
 type MeasurementData = {
+  /** Neck diameter in mm */
   neckDiameter: string;
+  /** Contralateral iliac diameter in mm */
   contralateralDiameter: string;
+  /** Ipsilateral iliac diameter in mm */
   ipsilateralDiameter: string;
+  /** Distance to contralateral iliac in mm */
   contralateralDistance: string;
+  /** Distance to ipsilateral iliac in mm */
   ipsilateralDistance: string;
 };
 
+/** Props for ResultsCard component */
 type ResultsCardProps = {
+  /** Measurement data for calculations */
   measurements: MeasurementData | null;
 };
 
+/**
+ * Results card component
+ * Displays calculated prosthesis recommendations based on measurements
+ */
 const ResultsCard = ({ measurements }: ResultsCardProps) => {
   const { t } = useTranslation();
   

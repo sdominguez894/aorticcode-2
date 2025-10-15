@@ -8,23 +8,36 @@ import {
 import { Globe } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
+/** Language option structure */
 type Language = {
+  /** ISO language code */
   code: string;
+  /** Display name of the language */
   name: string;
+  /** Emoji flag representation */
   flag: string;
 };
 
+/** Available language options */
 const languages: Language[] = [
   { code: "ca", name: "Català", flag: "🇪🇸" },
   { code: "es", name: "Castellano", flag: "🇪🇸" },
   { code: "en", name: "English", flag: "🇬🇧" },
 ];
 
+/**
+ * Language selector component
+ * Dropdown menu for switching between available languages
+ */
 const LanguageSelector = () => {
   const { i18n } = useTranslation();
   
   const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
 
+  /**
+   * Changes the application language
+   * @param langCode - ISO language code to switch to
+   */
   const handleLanguageChange = (langCode: string) => {
     i18n.changeLanguage(langCode);
   };

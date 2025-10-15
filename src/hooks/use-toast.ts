@@ -2,16 +2,24 @@ import * as React from "react";
 
 import type { ToastActionElement, ToastProps } from "@/components/ui/toast";
 
+/** Maximum number of toasts displayed simultaneously */
 const TOAST_LIMIT = 1;
+/** Delay before removing dismissed toast (ms) */
 const TOAST_REMOVE_DELAY = 1000000;
 
+/** Enhanced toast type with additional properties */
 type ToasterToast = ToastProps & {
+  /** Unique toast identifier */
   id: string;
+  /** Toast title content */
   title?: React.ReactNode;
+  /** Toast description content */
   description?: React.ReactNode;
+  /** Optional action element */
   action?: ToastActionElement;
 };
 
+/** Available toast action types */
 const actionTypes = {
   ADD_TOAST: "ADD_TOAST",
   UPDATE_TOAST: "UPDATE_TOAST",
@@ -21,6 +29,10 @@ const actionTypes = {
 
 let count = 0;
 
+/**
+ * Generates unique toast IDs
+ * @returns Unique string ID
+ */
 function genId() {
   count = (count + 1) % Number.MAX_SAFE_INTEGER;
   return count.toString();
@@ -28,6 +40,7 @@ function genId() {
 
 type ActionType = typeof actionTypes;
 
+/** Union type of all possible toast actions */
 type Action =
   | {
       type: ActionType["ADD_TOAST"];
@@ -46,12 +59,19 @@ type Action =
       toastId?: ToasterToast["id"];
     };
 
+/** Toast state structure */
 interface State {
+  /** Array of active toasts */
   toasts: ToasterToast[];
 }
 
+/** Map of toast IDs to their removal timeouts */
 const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>();
 
+/**
+ * Adds toast to removal queue after delay
+ * @param toastId - Toast ID to remove
+ */
 const addToRemoveQueue = (toastId: string) => {
   if (toastTimeouts.has(toastId)) {
     return;
@@ -68,6 +88,12 @@ const addToRemoveQueue = (toastId: string) => {
   toastTimeouts.set(toastId, timeout);
 };
 
+/**
+ * Toast state reducer
+ * @param state - Current toast state
+ * @param action - Action to perform
+ * @returns Updated state
+ */
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case "ADD_TOAST":
@@ -121,10 +147,16 @@ export const reducer = (state: State, action: Action): State => {
   }
 };
 
+/** Array of state change listeners */
 const listeners: Array<(state: State) => void> = [];
 
+/** In-memory toast state */
 let memoryState: State = { toasts: [] };
 
+/**
+ * Dispatches action to update toast state
+ * @param action - Action to dispatch
+ */
 function dispatch(action: Action) {
   memoryState = reducer(memoryState, action);
   listeners.forEach((listener) => {
@@ -134,6 +166,11 @@ function dispatch(action: Action) {
 
 type Toast = Omit<ToasterToast, "id">;
 
+/**
+ * Creates and displays a toast notification
+ * @param props - Toast configuration
+ * @returns Object with toast ID and control methods
+ */
 function toast({ ...props }: Toast) {
   const id = genId();
 
@@ -163,6 +200,10 @@ function toast({ ...props }: Toast) {
   };
 }
 
+/**
+ * Hook for managing toast notifications
+ * @returns Toast state and control functions
+ */
 function useToast() {
   const [state, setState] = React.useState<State>(memoryState);
 

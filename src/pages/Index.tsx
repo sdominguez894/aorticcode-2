@@ -8,18 +8,32 @@ import MeasurementForm from "@/components/MeasurementForm";
 import AnatomicalDiagram from "@/components/AnatomicalDiagram";
 import ResultsCard from "@/components/ResultsCard";
 
+/** Measurement data structure */
 type MeasurementData = {
+  /** Neck diameter in mm */
   neckDiameter: string;
+  /** Contralateral iliac diameter in mm */
   contralateralDiameter: string;
+  /** Ipsilateral iliac diameter in mm */
   ipsilateralDiameter: string;
+  /** Distance to contralateral iliac in mm */
   contralateralDistance: string;
+  /** Distance to ipsilateral iliac in mm */
   ipsilateralDistance: string;
 };
 
+/**
+ * Index page component
+ * Main landing page with EVAR prosthesis calculator
+ */
 const Index = () => {
   const { t } = useTranslation();
   const [calculatedMeasurements, setCalculatedMeasurements] = useState<MeasurementData | null>(null);
 
+  /**
+   * Handles calculation from measurement form
+   * @param data - Measurement data from form
+   */
   const handleCalculate = (data: MeasurementData) => {
     setCalculatedMeasurements(data);
   };

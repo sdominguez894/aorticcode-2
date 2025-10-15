@@ -5,6 +5,10 @@ import LanguageSelector from "@/components/LanguageSelector";
 import ThemeToggle from "@/components/ThemeToggle";
 import { AlertTriangle, Shield, FileText, Scale } from "lucide-react";
 
+/**
+ * Legal Notice page component
+ * Displays disclaimers, liability limitations, and legal information
+ */
 const LegalNotice = () => {
   const { t } = useTranslation();
   

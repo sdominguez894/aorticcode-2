@@ -3,6 +3,10 @@ import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 
+/**
+ * Theme toggle component
+ * Switches between light and dark themes with animated icon transitions
+ */
 const ThemeToggle = () => {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);

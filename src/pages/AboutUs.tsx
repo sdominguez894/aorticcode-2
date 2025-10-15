@@ -5,6 +5,10 @@ import LanguageSelector from "@/components/LanguageSelector";
 import ThemeToggle from "@/components/ThemeToggle";
 import { Users, Stethoscope, Code } from "lucide-react";
 
+/**
+ * About Us page component
+ * Displays information about the medical and engineering teams
+ */
 const AboutUs = () => {
   const { t } = useTranslation();
   

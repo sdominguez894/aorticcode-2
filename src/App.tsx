@@ -9,8 +9,13 @@ import AboutUs from "./pages/AboutUs";
 import LegalNotice from "./pages/LegalNotice";
 import NotFound from "./pages/NotFound";
 
+/** Query client for TanStack Query */
 const queryClient = new QueryClient();
 
+/**
+ * Root application component
+ * Provides global context providers and routing configuration
+ */
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
