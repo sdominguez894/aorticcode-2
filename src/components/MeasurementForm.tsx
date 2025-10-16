@@ -90,7 +90,8 @@ const MeasurementForm = ({ onCalculate }: MeasurementFormProps) => {
                 value={measurements.neckDiameter}
                 onChange={(e) => handleInputChange("neckDiameter", e.target.value)}
                 placeholder="24.5"
-                className="text-base border-2 focus:border-primary transition-colors"
+                className="text-base border-2 transition-colors"
+                style={{ borderColor: 'hsl(var(--neckDiameterColor))' }}
               />
             </div>
 
@@ -105,7 +106,8 @@ const MeasurementForm = ({ onCalculate }: MeasurementFormProps) => {
                 value={measurements.contralateralDiameter}
                 onChange={(e) => handleInputChange("contralateralDiameter", e.target.value)}
                 placeholder="18.0"
-                className="text-base border-2 focus:border-secondary transition-colors"
+                className="text-base border-2 transition-colors"
+                style={{ borderColor: 'hsl(var(--contralateralIliacDiameterColor))' }}
               />
             </div>
 
@@ -120,7 +122,8 @@ const MeasurementForm = ({ onCalculate }: MeasurementFormProps) => {
                 value={measurements.ipsilateralDiameter}
                 onChange={(e) => handleInputChange("ipsilateralDiameter", e.target.value)}
                 placeholder="16.5"
-                className="text-base border-2 focus:border-accent transition-colors"
+                className="text-base border-2 transition-colors"
+                style={{ borderColor: 'hsl(var(--ipsilateralIliacDiameterColor))' }}
               />
             </div>
 
@@ -135,7 +138,8 @@ const MeasurementForm = ({ onCalculate }: MeasurementFormProps) => {
                 value={measurements.contralateralDistance}
                 onChange={(e) => handleInputChange("contralateralDistance", e.target.value)}
                 placeholder="150"
-                className="text-base border-2 focus:border-medical-blue transition-colors"
+                className="text-base border-2 transition-colors"
+                style={{ borderColor: 'hsl(var(--contralateralDistanceColor))' }}
               />
             </div>
 
@@ -150,7 +154,8 @@ const MeasurementForm = ({ onCalculate }: MeasurementFormProps) => {
                 value={measurements.ipsilateralDistance}
                 onChange={(e) => handleInputChange("ipsilateralDistance", e.target.value)}
                 placeholder="145"
-                className="text-base border-2 focus:border-medical-teal transition-colors"
+                className="text-base border-2 transition-colors"
+                style={{ borderColor: 'hsl(var(--ipsilateralDistanceColor))' }}
               />
             </div>
           </div>
