@@ -90,8 +90,11 @@ const MeasurementForm = ({ onCalculate }: MeasurementFormProps) => {
                 value={measurements.neckDiameter}
                 onChange={(e) => handleInputChange("neckDiameter", e.target.value)}
                 placeholder="24.5"
-                className="text-base border-2 transition-colors"
-                style={{ borderColor: 'hsl(var(--neckDiameterColor))' }}
+                className="text-base border-2 transition-colors focus-visible:ring-2 focus-visible:ring-offset-0"
+                style={{ 
+                  borderColor: 'hsl(var(--neckDiameterColor))',
+                  ['--tw-ring-color' as string]: 'hsl(var(--neckDiameterColor))'
+                }}
               />
             </div>
 
@@ -106,8 +109,11 @@ const MeasurementForm = ({ onCalculate }: MeasurementFormProps) => {
                 value={measurements.contralateralDiameter}
                 onChange={(e) => handleInputChange("contralateralDiameter", e.target.value)}
                 placeholder="18.0"
-                className="text-base border-2 transition-colors"
-                style={{ borderColor: 'hsl(var(--contralateralIliacDiameterColor))' }}
+                className="text-base border-2 transition-colors focus-visible:ring-2 focus-visible:ring-offset-0"
+                style={{ 
+                  borderColor: 'hsl(var(--contralateralIliacDiameterColor))',
+                  ['--tw-ring-color' as string]: 'hsl(var(--contralateralIliacDiameterColor))'
+                }}
               />
             </div>
 
@@ -122,8 +128,11 @@ const MeasurementForm = ({ onCalculate }: MeasurementFormProps) => {
                 value={measurements.ipsilateralDiameter}
                 onChange={(e) => handleInputChange("ipsilateralDiameter", e.target.value)}
                 placeholder="16.5"
-                className="text-base border-2 transition-colors"
-                style={{ borderColor: 'hsl(var(--ipsilateralIliacDiameterColor))' }}
+                className="text-base border-2 transition-colors focus-visible:ring-2 focus-visible:ring-offset-0"
+                style={{ 
+                  borderColor: 'hsl(var(--ipsilateralIliacDiameterColor))',
+                  ['--tw-ring-color' as string]: 'hsl(var(--ipsilateralIliacDiameterColor))'
+                }}
               />
             </div>
 
@@ -138,8 +147,11 @@ const MeasurementForm = ({ onCalculate }: MeasurementFormProps) => {
                 value={measurements.contralateralDistance}
                 onChange={(e) => handleInputChange("contralateralDistance", e.target.value)}
                 placeholder="150"
-                className="text-base border-2 transition-colors"
-                style={{ borderColor: 'hsl(var(--contralateralDistanceColor))' }}
+                className="text-base border-2 transition-colors focus-visible:ring-2 focus-visible:ring-offset-0"
+                style={{ 
+                  borderColor: 'hsl(var(--contralateralDistanceColor))',
+                  ['--tw-ring-color' as string]: 'hsl(var(--contralateralDistanceColor))'
+                }}
               />
             </div>
 
@@ -154,8 +166,11 @@ const MeasurementForm = ({ onCalculate }: MeasurementFormProps) => {
                 value={measurements.ipsilateralDistance}
                 onChange={(e) => handleInputChange("ipsilateralDistance", e.target.value)}
                 placeholder="145"
-                className="text-base border-2 transition-colors"
-                style={{ borderColor: 'hsl(var(--ipsilateralDistanceColor))' }}
+                className="text-base border-2 transition-colors focus-visible:ring-2 focus-visible:ring-offset-0"
+                style={{ 
+                  borderColor: 'hsl(var(--ipsilateralDistanceColor))',
+                  ['--tw-ring-color' as string]: 'hsl(var(--ipsilateralDistanceColor))'
+                }}
               />
             </div>
           </div>
