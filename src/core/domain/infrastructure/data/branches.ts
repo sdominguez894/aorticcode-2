@@ -1,5 +1,5 @@
 // Catálogo de ramas
-import type { Branch } from '/static/domain/entities/Branch';
+import type { Branch } from '../../entities/Branch';
 
 /**
  * Catálogo de ramas de prótesis predefinidas.
