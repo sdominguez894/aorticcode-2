@@ -1,10 +1,14 @@
-import { PatientMeasurements } from '/static/domain/value-objects/PatientMeasurements.js';
+import { PatientMeasurements } from "../../value-objects/PatientMeasurements.ts";
+import { PatientMeasurementsPort } from "../../ports/PatientMeasurementsPort.ts";
 
 /**
  * Adapter that reads patient measurements directly from the DOM form.
- * Implements the PatientMeasurementsProvider port.
+ * 
+ * Implements the `PatientMeasurementsPort` interface.
+ * This is an infrastructure-level adapter in a hexagonal architecture,
+ * bridging the domain with the DOM/UI layer.
  */
-export class PatientMeasurementsProvider
+export class PatientMeasurementsProvider implements PatientMeasurementsPort
 {
     private readonly neckEl: HTMLInputElement;
     private readonly contralateralIliacEl: HTMLInputElement;
@@ -19,16 +23,16 @@ export class PatientMeasurementsProvider
      * @param selectors.contralateralDistanceSelector - CSS selector for contralateral distance input.
      * @param selectors.ipsilateralDistanceSelector - CSS selector for ipsilateral distance input.
      * 
-     * @throws {Error} If any selector does not match an element.
+     * @throws {Error} If any selector does not match an element in the DOM.
      */
-    constructor({
-        neckSelector,
-        contralateralIliacSelector,
-        ipsilateralIliacSelector,
-        contralateralDistanceSelector,
-        ipsilateralDistanceSelector
-    }:
+    constructor(
         {
+            neckSelector,
+            contralateralIliacSelector,
+            ipsilateralIliacSelector,
+            contralateralDistanceSelector,
+            ipsilateralDistanceSelector
+        }: {
             neckSelector: string;
             contralateralIliacSelector: string;
             ipsilateralIliacSelector: string;
@@ -36,31 +40,35 @@ export class PatientMeasurementsProvider
             ipsilateralDistanceSelector: string;
         })
     {
+        // Query and validate DOM elements
         this.neckEl = document.querySelector(neckSelector) as HTMLInputElement;
         this.contralateralIliacEl = document.querySelector(contralateralIliacSelector) as HTMLInputElement;
         this.ipsilateralIliacEl = document.querySelector(ipsilateralIliacSelector) as HTMLInputElement;
         this.contralateralDistanceEl = document.querySelector(contralateralDistanceSelector) as HTMLInputElement;
         this.ipsilateralDistanceEl = document.querySelector(ipsilateralDistanceSelector) as HTMLInputElement;
 
+        // Collect missing elements for better error reporting
         const missing = [
             !this.neckEl && neckSelector,
             !this.contralateralIliacEl && contralateralIliacSelector,
             !this.ipsilateralIliacEl && ipsilateralIliacSelector,
             !this.contralateralDistanceEl && contralateralDistanceSelector,
             !this.ipsilateralDistanceEl && ipsilateralDistanceSelector
-        ].filter(Boolean);
+        ].filter(Boolean) as string[];
 
-        if( missing.length )
+        if (missing.length)
         {
             throw new Error(
-                `PatientMeasurementsProvider: Missing DOM elements for selectors: ${missing.join(', ')}`
+                `PatientMeasurementsProvider: Missing DOM elements for selectors: ${missing.join(", ")}`
             );
         }
     }
 
     /**
-     * Reads current form values and returns a valid PatientMeasurements object.
-     * @returns {PatientMeasurements}
+     * Reads current form values and returns a valid `PatientMeasurements` object.
+     *
+     * @returns A `PatientMeasurements` instance populated with numeric values.
+     * @throws {Error} If any input contains invalid numeric data.
      */
     public getPatientMeasurements(): PatientMeasurements
     {
@@ -75,14 +83,22 @@ export class PatientMeasurementsProvider
         return new PatientMeasurements(data);
     }
 
-    /** Parses an input string to a number. */
+    /**
+     * Parses an input string into a finite number.
+     * 
+     * @param value - Raw string value from an HTML input.
+     * @returns Parsed numeric value.
+     * @throws {Error} If the value is not a valid number.
+     */
     private _parse(value: string): number
     {
         const n = Number.parseFloat(String(value).trim());
-        if( !Number.isFinite(n) )
+
+        if (!Number.isFinite(n))
         {
-            throw new Error('Invalid numeric input.');
+            throw new Error("Invalid numeric input.");
         }
+
         return n;
     }
 }
