@@ -1,4 +1,4 @@
-import { Branch } from "../entities/Branch.ts";
+import { Branch } from "../entities/Branch";
 
 /**
  * Outbound port for fetching prosthesis branches.
