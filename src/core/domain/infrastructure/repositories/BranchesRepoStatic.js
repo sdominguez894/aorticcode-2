@@ -1,4 +1,4 @@
-import { Branch } from '/static/domain/entities/Branch.js';
+import { Branch } from '/static/domain/entities/Branch';
 
 /**
  * Repositorio estático para obtener las ramas de prótesis.
@@ -6,24 +6,31 @@ import { Branch } from '/static/domain/entities/Branch.js';
  */
 export class BranchesRepoStatic
 {
-  // Shared by all instances
-  static _cache = null;
-  static BRANCHES_URL = '/static/infrastructure/data/branches.ts';
+    /** Caché compartida entre todas las instancias. */
+    private static _cache: Branch[] | null = null;
 
-  /** @returns {Promise<Branch[]>} */
-  async getAll()
-  {
-    // Si encara no està carregat → carregar i guardar a la memòria cau
-    if ( !BranchesRepoStatic._cache )
+    /** URL del módulo de datos estáticos. */
+    private static readonly BRANCHES_URL: string = '/static/infrastructure/data/branches.ts';
+
+    /**
+     * Devuelve todas las ramas de prótesis.
+     * Si no están cacheadas, las carga dinámicamente.
+     * @returns {Promise<Branch[]>}
+     */
+    public async getAll(): Promise<Branch[]>
     {
-      const branchesModule = await import( BranchesRepoStatic.BRANCHES_URL );
-     
-      // Obtenim les branques del mòdul carregat i generem objectes Branch que guardem a la cache
-      BranchesRepoStatic._cache = branchesModule.branches
-                                                .map( branchData => new Branch(branchData) );
-    }
+        // Si encara no està carregat → carregar i guardar a la memòria cau
+        if( !BranchesRepoStatic._cache )
+        {
+            const branchesModule = await import(BranchesRepoStatic.BRANCHES_URL);
 
-    // Retornar el resultat de la memòria cau (ja carregat)
-    return BranchesRepoStatic._cache;
-  }
+            // Obtenim les branques del mòdul carregat i generem objectes Branch que guardem a la cache
+            BranchesRepoStatic._cache = branchesModule.branches.map(
+                (branchData: ConstructorParameters<typeof Branch>[0]) => new Branch(branchData)
+            );
+        }
+
+        // Retornar el resultat de la memòria cau (ja carregat)
+        return BranchesRepoStatic._cache;
+    }
 }
