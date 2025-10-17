@@ -1,9 +1,9 @@
-import { BodiesRepository } from "../ports/BodiesRepository.ts";
-import { BranchesRepository } from "../ports/BranchesRepository.ts";
-import { PatientMeasurements } from "../entities/PatientMeasurements.ts";
-import { ProsthesisService } from "../services/ProsthesisService.ts";
-import { Body } from "../entities/Body.ts";
-import { Branch, BranchOption } from "../entities/Branch.ts";
+import { BodiesRepository } from "../ports/BodiesRepository";
+import { BranchesRepository } from "../ports/BranchesRepository";
+import { PatientMeasurements } from "../entities/PatientMeasurements";
+import { ProsthesisService } from "../services/ProsthesisService";
+import { Body } from "../entities/Body";
+import { Branch, BranchOption } from "../entities/Branch";
 
 /**
  * Servei d’aplicació responsable de coordinar la lògica de selecció de la pròtesi.
