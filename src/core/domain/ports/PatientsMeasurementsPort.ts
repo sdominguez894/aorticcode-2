@@ -1,4 +1,4 @@
-import { PatientMeasurements } from "../entities/PatientMeasurements.ts";
+import { PatientMeasurements } from "../entities/PatientMeasurements";
 
 /**
  * Outbound port for retrieving patient measurement data.
