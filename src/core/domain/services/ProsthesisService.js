@@ -1,8 +1,11 @@
-import { BodiesRepository } from "/static/domain/ports/BodiesRepository.js";
-import { BranchesRepository } from "/static/domain/ports/BranchesRepository.js";
-import { BranchOption } from "/static/domain/valueObjects/BranchOption.js";
-import { BranchType } from "/static/domain/enums/BranchType.js";
-import { PatientMeasurements } from "/static/domain/entities/PatientMeasurements.js";
+import type { BodiesRepository } from "../ports/BodiesRepository";
+import type { BranchesRepository } from "../ports/BranchesRepository";
+
+import { BranchOption } from "../valueObjects/BranchOption";
+import { BranchType } from "../enums/BranchType";
+import { PatientMeasurements } from "../entities/PatientMeasurements";
+import { Body } from "../entities/Body";
+import { Branch } from "../entities/Branch";
 
 /**
  * Servei d’aplicació responsable de coordinar la lògica de selecció de la pròtesi.
@@ -16,40 +19,55 @@ import { PatientMeasurements } from "/static/domain/entities/PatientMeasurements
  */
 export class ProsthesisService
 {
-    // Solapament mínim entre components (en mil·límetres)
-    static MINIMUM_OVERLAP_MM = 30;
+    /** Solapament mínim entre components (en mil·límetres). */
+    public static readonly MINIMUM_OVERLAP_MM = 30;
+
+    private readonly bodiesRepo: BodiesRepository;
+    private readonly branchesRepo: BranchesRepository;
+    private readonly measurements: PatientMeasurements;
+
+    private _bodies: Body[] = [];
+    private _branches: Branch[] = [];
+
+    /**
+     * Crea una nova instància de `ProsthesisService`.
+     * 
+     * ATENCIÓ: Aquesta classe depèn de la injecció de dependències amb el mètode `init()`, 
+     * cal cridar-lo immediatament després de crear la instància i abans d'utilitzar altres mètodes.
+     * 
+     * @param dependencies - Objecte amb les dependències necessàries.
+     * @param dependencies.bodiesRepo - Repositori per accedir als cossos principals.
+     * @param dependencies.branchesRepo - Repositori per accedir a les branques ilíaques.
+     * @param dependencies.measurements - Proveïdor de mesures anatòmiques del pacient.
+     */
+    constructor(
+        {
+            bodiesRepo,
+            branchesRepo,
+            measurements
+        }: {
+            bodiesRepo: BodiesRepository;
+            branchesRepo: BranchesRepository;
+            measurements: PatientMeasurements;
+        })
+    {
+        this.bodiesRepo = bodiesRepo;
+        this.branchesRepo = branchesRepo;
+        this.measurements = measurements;
+    }
 
     /**
      * Inicialitza les dades estàtiques necessàries per a la selecció de pròtesis.
      * Aquesta funció ha de ser cridada abans d'utilitzar altres mètodes del servei.
      *
-     * @returns {Promise<ProsthesisService>} Retorna la mateixa instància però amb les dades inicialitzades
+     * @returns Retorna la mateixa instància però amb les dades inicialitzades.
      */
-    async init() 
+    public async init(): Promise<ProsthesisService>
     {
         this._bodies = await this.bodiesRepo.getAll();
         this._branches = await this.branchesRepo.getAll();
-        
-        return this;
-    }
 
-    /**
-     * Crea una nova instància de ProsthesisService.
-     * 
-     * ATENCIÓ: Aquesta classe depèn de la injecció de dependències amb el mètode init(), 
-     * cal cridar-lo inmediatament després de crear la instància i abans d'utilitzar altres mètodes.
-     * 
-     * @param {Object} dependencies - Objecte amb les dependències necessàries.
-     * @param {BodiesRepository} dependencies.bodiesRepo - Repositori per accedir als cossos principals.
-     * @param {BranchesRepository} dependencies.branchesRepo - Repositori per accedir a les branques ilíaques.
-     * @param {PatientMeasurements} dependencies.measurements - Proveïdor de mesures anatòmiques del pacient.
-     */
-    constructor({ bodiesRepo, branchesRepo, measurements })
-    {
-        // Adaptadors / ports proveïts per la capa d’infraestructura
-        this.bodiesRepo = bodiesRepo;         // Proporciona els cossos principals disponibles
-        this.branchesRepo = branchesRepo;     // Proporciona les branques ilíaques disponibles
-        this.measurements = measurements;     // Proporciona les mesures anatòmiques del pacient (UI o font de dades)
+        return this;
     }
 
     /**
@@ -58,38 +76,39 @@ export class ProsthesisService
      * El cos principal ha de tenir un sobredimensionament (diferència entre el diàmetre de la pròtesi
      * i el del coll aòrtic) d’entre **10% i 30%**, que és el rang típic en planificació endovascular.
      *
-     * @param {number} neckDiameter - Diàmetre del coll aòrtic del pacient (mm).
+     * @param neckDiameter - Diàmetre del coll aòrtic del pacient (mm).
      * 
-     * @returns { Body, oversizing }    El cos principal seleccionat (amb la informació de sobredimensionament) 
-     *                                  o null si no hi ha cap opció vàlida.
+     * @returns El cos principal seleccionat (amb la informació de sobredimensionament) 
+     *          o null si no hi ha cap opció vàlida.
      */
-    selectMainBody( neckDiameter )
+    public selectMainBody(
+        neckDiameter: number
+    ): (Body & { oversizing: number }) | null
     {
-        // Recupera tots els cossos disponibles del repositori
         const allBodies = this._bodies;
 
-        // Defineix el rang de sobredimensionament acceptable (10%–30%)
+        // Rang acceptable de sobredimensionament: 10%–30%
         const minimumAllowedDiameter = neckDiameter * 1.10;
         const maximumAllowedDiameter = neckDiameter * 1.30;
 
-        // Filtra els cossos que compleixen aquest rang
         const compatibleBodies = allBodies.filter(body =>
-            body.diameter >= minimumAllowedDiameter && body.diameter <= maximumAllowedDiameter
+            body.diameter >= minimumAllowedDiameter &&
+            body.diameter <= maximumAllowedDiameter
         );
 
-        // Si no hi ha cap cos compatible → retorna null (la UI ho gestionarà)
-        if( compatibleBodies.length === 0 )
+        if (compatibleBodies.length === 0)
         {
             return null;
         }
 
-        // Selecciona el cos compatible més petit (primer de la llista)
+        // Selecciona el cos compatible més petit (primer)
         const selectedBody = compatibleBodies[0];
 
         // Calcula el percentatge de sobredimensionament respecte al coll
-        const oversizingPercent = ((selectedBody.diameter / neckDiameter - 1) * 100).toFixed(1);
+        const oversizingPercent = parseFloat(
+            ((selectedBody.diameter / neckDiameter - 1) * 100).toFixed(1)
+        );
 
-        // Retorna el cos seleccionat amb la informació addicional
         return { ...selectedBody, oversizing: oversizingPercent };
     }
 
@@ -102,111 +121,127 @@ export class ProsthesisService
      * Avalua tant combinacions d’una sola branca com de dues branques,
      * tenint en compte el solapament mínim entre components (30 mm).
      *
-     * @param {number} targetIliacDiameter - Diàmetre objectiu de l’artèria ilíaca (mm).
-     * @param {number} bodyLength - Longitud del cos principal seleccionat (mm).
-     * @param {number} legLength - Longitud de la cama de la pròtesi (curta o llarga) (mm).
-     * @param {number} totalAnatomicalDistance - Distància anatòmica total a cobrir (mm).
+     * @param targetIliacDiameter - Diàmetre objectiu de l’artèria ilíaca (mm).
+     * @param bodyLength - Longitud del cos principal seleccionat (mm).
+     * @param legLength - Longitud de la cama de la pròtesi (curta o llarga) (mm).
+     * @param totalAnatomicalDistance - Distància anatòmica total a cobrir (mm).
      * 
-     * @returns { options: Array<BranchOption>,
-     *            needsBridge: boolean,
-     *            remainingDistance: number,
-     *            compatibleBranches: Array<Branch> }
+     * @returns Objecte amb opcions de branques compatibles i informació addicional.
      */
-    findBranchOptions(targetIliacDiameter, bodyLength, legLength, totalAnatomicalDistance)
+    public findBranchOptions(
+        targetIliacDiameter: number,
+        bodyLength: number,
+        legLength: number,
+        totalAnatomicalDistance: number
+    ): {
+        options: BranchOption[];
+        needsBridge: boolean;
+        remainingDistance: number;
+        compatibleBranches: Branch[];
+    }
     {
-        // Obté totes les branques disponibles del repositori
         const allBranches = this._branches;
 
-        // Rang acceptable de sobredimensionament: 10%–30% respecte al diàmetre objectiu
+        // Rang acceptable de sobredimensionament: 10%–30%
         const minimumAllowedDiameter = targetIliacDiameter * 1.10;
         const maximumAllowedDiameter = targetIliacDiameter * 1.30;
 
-        // Filtra les branques compatibles per diàmetre
-        const compatibleBranches = allBranches.filter( branch => branch.diameter >= minimumAllowedDiameter && 
-                                                                 branch.diameter <= maximumAllowedDiameter );
-        
-        // Cobertura actual (cos principal + cama)
+        const compatibleBranches = allBranches.filter(branch =>
+            branch.diameter >= minimumAllowedDiameter &&
+            branch.diameter <= maximumAllowedDiameter
+        );
+
         const baseCoverage = bodyLength + legLength;
 
-        // Distància que falta per cobrir (ajustant el solapament requerit)
-        const remainingDistance = totalAnatomicalDistance - baseCoverage + ProsthesisService.MINIMUM_OVERLAP_MM;
+        const remainingDistance =
+            totalAnatomicalDistance - baseCoverage + ProsthesisService.MINIMUM_OVERLAP_MM;
 
-        // Llista que contindrà totes les combinacions vàlides de branques segons les mides anatòmiques proporcionades
-        const branchOptions = [];
-        
+        const branchOptions: BranchOption[] = [];
+
         // -------------------------------------------------------------------------
-        // 🩻 1️⃣ Combinacions d’una sola branca: una branca cobreix tota la distància
+        // Combinacions d’una sola branca
         // -------------------------------------------------------------------------
         for (const singleBranch of compatibleBranches)
         {
-            // Cobertura total = cos + cama + branca - solapament
-            const totalCoverage = baseCoverage + singleBranch.length - ProsthesisService.MINIMUM_OVERLAP_MM;
+            const totalCoverage =
+                baseCoverage + singleBranch.length - ProsthesisService.MINIMUM_OVERLAP_MM;
 
-            // Si cobreix la distància anatòmica → afegeix la combinació
             if (totalCoverage >= totalAnatomicalDistance)
             {
-                const oversizingPercent = ((singleBranch.diameter / targetIliacDiameter - 1) * 100).toFixed(1);
+                const oversizingPercent = parseFloat(
+                    ((singleBranch.diameter / targetIliacDiameter - 1) * 100).toFixed(1)
+                );
 
-                branchOptions.push( new BranchOption({
-                                                        type: BranchType.SINGLE,
-                                                        branches: [singleBranch],
-                                                        totalCoverage,
-                                                        excess: totalCoverage - totalAnatomicalDistance,
-                                                        oversizing: oversizingPercent
-                                                    })
-                                    );
+                branchOptions.push(
+                    new BranchOption({
+                        side: singleBranch.side,
+                        type: BranchType.SINGLE,
+                        branches: [singleBranch],
+                        totalCoverage,
+                        excess: totalCoverage - totalAnatomicalDistance,
+                        oversizing: oversizingPercent
+                    })
+                );
             }
         }
 
         // -------------------------------------------------------------------------
-        // 🧬 2️⃣ Combinacions de doble branca: dues branques per major cobertura
+        // Combinacions de doble branca
         // -------------------------------------------------------------------------
         for (const firstBranch of compatibleBranches)
         {
             for (const secondBranch of compatibleBranches)
             {
-                // Només combinar si tenen el mateix diàmetre (compatibilitat)
                 if (firstBranch.diameter !== secondBranch.diameter)
                 {
                     continue;
                 }
 
-                // Cobertura total amb dues branques (dos solapaments)
-                const totalCoverage = baseCoverage + firstBranch.length + secondBranch.length - ( 2 * ProsthesisService.MINIMUM_OVERLAP_MM );
+                const totalCoverage =
+                    baseCoverage +
+                    firstBranch.length +
+                    secondBranch.length -
+                    2 * ProsthesisService.MINIMUM_OVERLAP_MM;
 
-                // Verifica la cobertura total i la longitud combinada
-                const combinedLength = firstBranch.length + secondBranch.length - ProsthesisService.MINIMUM_OVERLAP_MM;
+                const combinedLength =
+                    firstBranch.length + secondBranch.length - ProsthesisService.MINIMUM_OVERLAP_MM;
+
                 const isLongEnough = combinedLength > remainingDistance;
 
-                // Si cobreix la distància i és prou llarga → afegeix la combinació
                 if (totalCoverage >= totalAnatomicalDistance && isLongEnough)
                 {
-                    const oversizingPercent = ((firstBranch.diameter / targetIliacDiameter - 1) * 100).toFixed(1);
+                    const oversizingPercent = parseFloat(
+                        ((firstBranch.diameter / targetIliacDiameter - 1) * 100).toFixed(1)
+                    );
 
-                    branchOptions.push( new BranchOption({
-                                                            type: BranchType.DOUBLE,
-                                                            branches: [firstBranch, secondBranch],
-                                                            totalCoverage,
-                                                            excess: totalCoverage - totalAnatomicalDistance,
-                                                            oversizing: oversizingPercent
-                                                        })
-                                        );
+                    branchOptions.push(
+                        new BranchOption({
+                            side: firstBranch.side,
+                            type: BranchType.DOUBLE,
+                            branches: [firstBranch, secondBranch],
+                            totalCoverage,
+                            excess: totalCoverage - totalAnatomicalDistance,
+                            oversizing: oversizingPercent
+                        })
+                    );
                 }
             }
         }
 
         // -------------------------------------------------------------------------
-        // 🧩 3️⃣ Determina si cal una extensió ("pont") addicional
+        // Determina si cal una extensió ("pont") addicional
         // -------------------------------------------------------------------------
-        const longestAvailableBranchLength = Math.max( ...compatibleBranches.map(branch => branch.length), 0 );
+        const longestAvailableBranchLength = Math.max(
+            ...compatibleBranches.map(b => b.length),
+            0
+        );
 
-        const requiresBridgeExtension = branchOptions.length === 0 || 
-                                        remainingDistance > longestAvailableBranchLength;
+        const requiresBridgeExtension =
+            branchOptions.length === 0 || remainingDistance > longestAvailableBranchLength;
 
-        // Ordena les combinacions pel menor excés (ajust més precís primer)
-        branchOptions.sort( (optionA, optionB) => optionA.excess - optionB.excess );
+        // Ordena les opcions pel menor excés (ajust més precís primer)
+        branchOptions.sort((a, b) => a.excess - b.excess);
 
-        // Retorna els resultats calculats a la capa de presentació
         return {
             options: branchOptions,
             needsBridge: requiresBridgeExtension,
