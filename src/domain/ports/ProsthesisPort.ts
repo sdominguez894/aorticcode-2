@@ -3,7 +3,8 @@ import { BranchesRepository } from "../ports/BranchesRepository";
 import { PatientMeasurements } from "../entities/PatientMeasurements";
 import { ProsthesisService } from "../services/ProsthesisService";
 import { Body } from "../entities/Body";
-import { Branch, BranchOption } from "../entities/Branch";
+import { Branch } from "../entities/Branch";
+import { BranchOption } from "../valueObjects/BranchOption";
 
 /**
  * Servei d’aplicació responsable de coordinar la lògica de selecció de la pròtesi.

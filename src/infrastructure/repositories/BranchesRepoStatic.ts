@@ -1,5 +1,5 @@
-import { Branch } from "../../entities/Branch";
-import { BranchesRepository } from "../../ports/BranchesRepository";
+import { Branch } from "../../domain/entities/Branch";
+import { BranchesRepository } from "../../domain/ports/BranchesRepository";
 
 /**
  * Repositorio estático para obtener las ramas de prótesis.

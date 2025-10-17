@@ -3,7 +3,7 @@
 import type { BranchesRepository } from "../ports/BranchesRepository";
 
 // Import the default repository implementation (adapter) that retrieves data statically.
-import { BranchesRepoStatic } from "../infrastructure/repositories/BranchesRepoStatic";
+import { BranchesRepoStatic } from "../../infrastructure/repositories/BranchesRepoStatic";
 
 /**
  * Application service responsible for orchestrating prosthesis branch retrieval.

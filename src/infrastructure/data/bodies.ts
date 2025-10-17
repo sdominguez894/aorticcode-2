@@ -1,5 +1,5 @@
 // Catálogo de prótesis con correcciones de longitud de patas
-import type { Body } from '../../entities/Body';
+import type { Body } from '../../domain/entities/Body';
 
 /**
  * Catálogo de cuerpos de prótesis predefinidos.

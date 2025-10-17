@@ -1,5 +1,5 @@
-import { PatientMeasurements } from "../../value-objects/PatientMeasurements";
-import { PatientMeasurementsPort } from "../../ports/PatientMeasurementsPort";
+import { PatientMeasurements } from "../../domain/entities/PatientMeasurements";
+import { PatientMeasurementsPort } from "../../domain/ports/PatientMeasurementsPort";
 
 /**
  * Adapter that reads patient measurements directly from the DOM form.

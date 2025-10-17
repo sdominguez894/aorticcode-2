@@ -3,7 +3,7 @@
 import type { BodiesRepository } from '../ports/BodiesRepository';
 
 // Import the default repository implementation (adapter) that retrieves data statically.
-import { BodiesRepoStatic } from '../infrastructure/repositories/BodiesRepoStatic';
+import { BodiesRepoStatic } from '../../infrastructure/repositories/BodiesRepoStatic';
 
 /**
  * Application service responsible for orchestrating prosthesis body retrieval.

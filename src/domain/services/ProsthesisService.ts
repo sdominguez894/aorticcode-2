@@ -6,6 +6,8 @@ import { BranchType } from "../enums/BranchType";
 import { PatientMeasurements } from "../entities/PatientMeasurements";
 import { Body } from "../entities/Body";
 import { Branch } from "../entities/Branch";
+import { BranchSide } from "../enums/BranchSide";
+import { MainBody } from "../valueObjects/MainBody";
 
 /**
  * Servei d’aplicació responsable de coordinar la lògica de selecció de la pròtesi.
@@ -81,35 +83,25 @@ export class ProsthesisService
      * @returns El cos principal seleccionat (amb la informació de sobredimensionament) 
      *          o null si no hi ha cap opció vàlida.
      */
-    public selectMainBody(
-        neckDiameter: number
-    ): (Body & { oversizing: number }) | null
+    public selectMainBody( neckDiameter: number ): MainBody | null
     {
         const allBodies = this._bodies;
+        const min = neckDiameter * 1.10;
+        const max = neckDiameter * 1.30;
 
-        // Rang acceptable de sobredimensionament: 10%–30%
-        const minimumAllowedDiameter = neckDiameter * 1.10;
-        const maximumAllowedDiameter = neckDiameter * 1.30;
-
-        const compatibleBodies = allBodies.filter(body =>
-            body.diameter >= minimumAllowedDiameter &&
-            body.diameter <= maximumAllowedDiameter
+        const compatible = allBodies.filter(
+            body => body.diameter >= min && body.diameter <= max
         );
 
-        if (compatibleBodies.length === 0)
+        if (compatible.length === 0)
         {
             return null;
         }
 
-        // Selecciona el cos compatible més petit (primer)
-        const selectedBody = compatibleBodies[0];
+        const selected = compatible[0];
+        const oversizing = parseFloat(((selected.diameter / neckDiameter - 1) * 100).toFixed(1));
 
-        // Calcula el percentatge de sobredimensionament respecte al coll
-        const oversizingPercent = parseFloat(
-            ((selectedBody.diameter / neckDiameter - 1) * 100).toFixed(1)
-        );
-
-        return { ...selectedBody, oversizing: oversizingPercent };
+        return new MainBody({ body: selected, oversizing });
     }
 
     /**
@@ -121,6 +113,7 @@ export class ProsthesisService
      * Avalua tant combinacions d’una sola branca com de dues branques,
      * tenint en compte el solapament mínim entre components (30 mm).
      *
+     * @param side - Indica el costat respecte al cos insertat 
      * @param targetIliacDiameter - Diàmetre objectiu de l’artèria ilíaca (mm).
      * @param bodyLength - Longitud del cos principal seleccionat (mm).
      * @param legLength - Longitud de la cama de la pròtesi (curta o llarga) (mm).
@@ -129,6 +122,7 @@ export class ProsthesisService
      * @returns Objecte amb opcions de branques compatibles i informació addicional.
      */
     public findBranchOptions(
+        side: BranchSide,
         targetIliacDiameter: number,
         bodyLength: number,
         legLength: number,
@@ -174,7 +168,7 @@ export class ProsthesisService
 
                 branchOptions.push(
                     new BranchOption({
-                        side: singleBranch.side,
+                        side: side,
                         type: BranchType.SINGLE,
                         branches: [singleBranch],
                         totalCoverage,
@@ -216,7 +210,7 @@ export class ProsthesisService
 
                     branchOptions.push(
                         new BranchOption({
-                            side: firstBranch.side,
+                            side: side,
                             type: BranchType.DOUBLE,
                             branches: [firstBranch, secondBranch],
                             totalCoverage,

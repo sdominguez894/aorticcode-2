@@ -100,7 +100,7 @@ export class BranchOption
     public toString(): string
     {
         const names = this._branches
-            .map(b => b.code ?? b.id ?? "unknown")
+            .map(b => b.code ?? "unknown")
             .join(" + ");
 
         return `${this._side.toUpperCase()} - ${this._type.toUpperCase()} [${names}] — ${this._oversizing}% oversizing, +${this._excess}mm`;
