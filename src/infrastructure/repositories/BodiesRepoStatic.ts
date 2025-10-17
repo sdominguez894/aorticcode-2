@@ -11,7 +11,7 @@ export class BodiesRepoStatic implements BodiesRepository
     private static _cache: Body[] | null = null;
 
     /** URL del módulo de datos estáticos. */
-    private static readonly BODIES_URL = '/static/infrastructure/data/bodies.ts';
+    private static readonly BODIES_URL = '../data/bodies';
 
     /**
      * Devuelve todos los cuerpos de prótesis.
