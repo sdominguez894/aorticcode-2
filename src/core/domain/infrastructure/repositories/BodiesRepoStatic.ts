@@ -1,17 +1,18 @@
-import { Body } from '/static/domain/entities/Body.js';
+import { Body } from '/static/domain/entities/Body';
+import type { IBodiesRepository } from '/static/domain/ports/BodiesRepository';
 
 /**
  * Repositorio estático para obtener los cuerpos de prótesis.
  * Implementa un patrón singleton para cachear los datos una vez cargados.
  */
-export class BodiesRepoStatic
+export class BodiesRepoStatic implements BodiesRepository
 {
     /** Cache compartida entre todas las instancias. */
     private static _cache: Body[] | null = null;
 
     /** URL del módulo de datos estáticos. */
-    private static readonly BODIES_URL: string = '/static/infrastructure/data/bodies.js';
-    
+    private static readonly BODIES_URL = '/static/infrastructure/data/bodies.ts';
+
     /**
      * Devuelve todos los cuerpos de prótesis.
      * Si no están cacheados, los carga dinámicamente.
@@ -20,10 +21,8 @@ export class BodiesRepoStatic
     {
         if( !BodiesRepoStatic._cache )
         {
-            // Lazy-load del módulo de datos solo si no está cacheado
             const bodiesModule = await import(BodiesRepoStatic.BODIES_URL);
 
-            // Obtenemos los cuerpos del módulo cargado y generamos objetos Body que guardamos en la caché
             BodiesRepoStatic._cache = bodiesModule.bodies.map(
                 (bodyData: ConstructorParameters<typeof Body>[0]) => new Body(bodyData)
             );
