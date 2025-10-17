@@ -6,13 +6,18 @@ import { PatientMeasurements } from '/static/domain/value-objects/PatientMeasure
  */
 export class PatientMeasurementsProvider
 {
+    private readonly neckEl: HTMLInputElement;
+    private readonly contralateralIliacEl: HTMLInputElement;
+    private readonly ipsilateralIliacEl: HTMLInputElement;
+    private readonly contralateralDistanceEl: HTMLInputElement;
+    private readonly ipsilateralDistanceEl: HTMLInputElement;
+
     /**
-     * @param {Object} selectors - CSS selectors for measurement inputs.
-     * @param {string} selectors.neckSelector
-     * @param {string} selectors.contralateralIliacSelector
-     * @param {string} selectors.ipsilateralIliacSelector
-     * @param {string} selectors.contralateralDistanceSelector
-     * @param {string} selectors.ipsilateralDistanceSelector
+     * @param selectors.neckSelector - CSS selector for neck input.
+     * @param selectors.contralateralIliacSelector - CSS selector for contralateral iliac input.
+     * @param selectors.ipsilateralIliacSelector - CSS selector for ipsilateral iliac input.
+     * @param selectors.contralateralDistanceSelector - CSS selector for contralateral distance input.
+     * @param selectors.ipsilateralDistanceSelector - CSS selector for ipsilateral distance input.
      * 
      * @throws {Error} If any selector does not match an element.
      */
@@ -22,13 +27,20 @@ export class PatientMeasurementsProvider
         ipsilateralIliacSelector,
         contralateralDistanceSelector,
         ipsilateralDistanceSelector
-    })
+    }:
+        {
+            neckSelector: string;
+            contralateralIliacSelector: string;
+            ipsilateralIliacSelector: string;
+            contralateralDistanceSelector: string;
+            ipsilateralDistanceSelector: string;
+        })
     {
-        this.neckEl = document.querySelector(neckSelector);
-        this.contralateralIliacEl = document.querySelector(contralateralIliacSelector);
-        this.ipsilateralIliacEl = document.querySelector(ipsilateralIliacSelector);
-        this.contralateralDistanceEl = document.querySelector(contralateralDistanceSelector);
-        this.ipsilateralDistanceEl = document.querySelector(ipsilateralDistanceSelector);
+        this.neckEl = document.querySelector(neckSelector) as HTMLInputElement;
+        this.contralateralIliacEl = document.querySelector(contralateralIliacSelector) as HTMLInputElement;
+        this.ipsilateralIliacEl = document.querySelector(ipsilateralIliacSelector) as HTMLInputElement;
+        this.contralateralDistanceEl = document.querySelector(contralateralDistanceSelector) as HTMLInputElement;
+        this.ipsilateralDistanceEl = document.querySelector(ipsilateralDistanceSelector) as HTMLInputElement;
 
         const missing = [
             !this.neckEl && neckSelector,
@@ -38,7 +50,7 @@ export class PatientMeasurementsProvider
             !this.ipsilateralDistanceEl && ipsilateralDistanceSelector
         ].filter(Boolean);
 
-        if (missing.length)
+        if( missing.length )
         {
             throw new Error(
                 `PatientMeasurementsProvider: Missing DOM elements for selectors: ${missing.join(', ')}`
@@ -48,9 +60,9 @@ export class PatientMeasurementsProvider
 
     /**
      * Reads current form values and returns a valid PatientMeasurements object.
-     * @returns {Promise<PatientMeasurements>}
+     * @returns {PatientMeasurements}
      */
-    getPatientMeasurements()
+    public getPatientMeasurements(): PatientMeasurements
     {
         const data = {
             neckDiameter: this._parse(this.neckEl.value),
@@ -63,11 +75,11 @@ export class PatientMeasurementsProvider
         return new PatientMeasurements(data);
     }
 
-    /** @param {string} value @returns {number} */
-    _parse(value)
+    /** Parses an input string to a number. */
+    private _parse(value: string): number
     {
         const n = Number.parseFloat(String(value).trim());
-        if (!Number.isFinite(n))
+        if( !Number.isFinite(n) )
         {
             throw new Error('Invalid numeric input.');
         }
