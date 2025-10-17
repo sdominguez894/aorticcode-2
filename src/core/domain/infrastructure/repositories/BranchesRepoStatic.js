@@ -8,7 +8,7 @@ export class BranchesRepoStatic
 {
   // Shared by all instances
   static _cache = null;
-  static BRANCHES_URL = '/static/infrastructure/data/branches.js';
+  static BRANCHES_URL = '/static/infrastructure/data/branches.ts';
 
   /** @returns {Promise<Branch[]>} */
   async getAll()
