@@ -1,5 +1,5 @@
-import { PatientMeasurements } from "../../value-objects/PatientMeasurements.ts";
-import { PatientMeasurementsPort } from "../../ports/PatientMeasurementsPort.ts";
+import { PatientMeasurements } from "../../value-objects/PatientMeasurements";
+import { PatientMeasurementsPort } from "../../ports/PatientMeasurementsPort";
 
 /**
  * Adapter that reads patient measurements directly from the DOM form.
