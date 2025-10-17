@@ -1,5 +1,5 @@
-import { Body } from '/static/domain/entities/Body';
-import type { IBodiesRepository } from '/static/domain/ports/BodiesRepository';
+import { Body } from '../../entities/Body';
+import type { IBodiesRepository } from '../../ports/BodiesRepository';
 
 /**
  * Repositorio estático para obtener los cuerpos de prótesis.
