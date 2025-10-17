@@ -13,7 +13,7 @@ export class BranchesRepoStatic implements BranchesRepository
     private static _cache: Branch[] | null = null;
 
     /** Ruta del módulo de datos estáticos (sin extensión para compatibilidad con Vite). */
-    private static readonly BRANCHES_URL: string = "../../infrastructure/data/branches.ts";
+    private static readonly BRANCHES_URL: string = "../../infrastructure/data/branches";
 
     /**
      * Devuelve todas las ramas de prótesis.
