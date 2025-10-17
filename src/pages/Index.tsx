@@ -7,6 +7,9 @@ import ThemeToggle from "@/components/ThemeToggle";
 import MeasurementForm from "@/components/MeasurementForm";
 import AnatomicalDiagram from "@/components/AnatomicalDiagram";
 import ResultsCard from "@/components/ResultsCard";
+import { useProsthesisService, ProsthesisResults } from "@/hooks/useProsthesisService";
+import { PatientMeasurements } from "@/domain/entities/PatientMeasurements";
+import { toast } from "sonner";
 
 /** Measurement data structure */
 type MeasurementData = {
@@ -29,13 +32,37 @@ type MeasurementData = {
 const Index = () => {
   const { t } = useTranslation();
   const [calculatedMeasurements, setCalculatedMeasurements] = useState<MeasurementData | null>(null);
+  const [prosthesisResults, setProsthesisResults] = useState<ProsthesisResults | null>(null);
+  const { calculateProsthesis, isLoading } = useProsthesisService();
 
   /**
    * Handles calculation from measurement form
    * @param data - Measurement data from form
    */
-  const handleCalculate = (data: MeasurementData) => {
+  const handleCalculate = async (data: MeasurementData) => {
     setCalculatedMeasurements(data);
+
+    try {
+      // Create PatientMeasurements entity
+      const measurements = new PatientMeasurements({
+        neckDiameter: parseFloat(data.neckDiameter),
+        contralateralIliacDiameter: parseFloat(data.contralateralDiameter),
+        ipsilateralIliacDiameter: parseFloat(data.ipsilateralDiameter),
+        contralateralDistance: parseFloat(data.contralateralDistance),
+        ipsilateralDistance: parseFloat(data.ipsilateralDistance),
+      });
+
+      // Calculate prosthesis using service
+      const results = await calculateProsthesis(measurements);
+      setProsthesisResults(results);
+
+      if (!results.mainBody) {
+        toast.error(t('form.noCompatibleBody'));
+      }
+    } catch (error) {
+      console.error('Error calculating prosthesis:', error);
+      toast.error(t('form.calculationError'));
+    }
   };
 
   return (
@@ -80,7 +107,11 @@ const Index = () => {
 
         {/* Results Section */}
         <div className="max-w-4xl mx-auto">
-          <ResultsCard measurements={calculatedMeasurements} />
+          <ResultsCard 
+            measurements={calculatedMeasurements} 
+            results={prosthesisResults}
+            isLoading={isLoading}
+          />
         </div>
       </main>
 

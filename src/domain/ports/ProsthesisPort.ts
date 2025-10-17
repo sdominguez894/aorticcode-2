@@ -5,15 +5,16 @@ import { ProsthesisService } from "../services/ProsthesisService";
 import { Body } from "../entities/Body";
 import { Branch } from "../entities/Branch";
 import { BranchOption } from "../valueObjects/BranchOption";
+import { BranchSide } from "../enums/BranchSide";
 
 /**
- * Servei d’aplicació responsable de coordinar la lògica de selecció de la pròtesi.
+ * Servei d'aplicació responsable de coordinar la lògica de selecció de la pròtesi.
  *
  * Aquesta classe implementa la lògica principal de decisió del selector de pròtesis:
  * - Seleccionar el cos principal (secció aòrtica) segons el diàmetre del coll.
  * - Trobar branques ilíaques compatibles segons distàncies i diàmetres.
  *
- * Delegarà tot l’accés a dades als ports de repositori (bodiesRepo, branchesRepo)
+ * Delegarà tot l'accés a dades als ports de repositori (bodiesRepo, branchesRepo)
  * i obtindrà les mesures anatòmiques del pacient a través del port PatientMeasurementsProvider.
  */
 export class ProsthesisPort
@@ -42,7 +43,7 @@ export class ProsthesisPort
             measurements: PatientMeasurements;
         })
     {
-        // Adaptadors / ports proveïts per la capa d’infraestructura
+        // Adaptadors / ports proveïts per la capa d'infraestructura
         this.prosthesisService = new ProsthesisService({ bodiesRepo, branchesRepo, measurements });
     }
 
@@ -65,7 +66,7 @@ export class ProsthesisPort
      * Selecciona el cos principal de la pròtesi més adequat per a un pacient donat.
      *
      * El cos principal ha de tenir un sobredimensionament (diferència entre el diàmetre de la pròtesi
-     * i el del coll aòrtic) d’entre **10% i 30%**, que és el rang típic en planificació endovascular.
+     * i el del coll aòrtic) d'entre **10% i 30%**, que és el rang típic en planificació endovascular.
      *
      * @param neckDiameter - Diàmetre del coll aòrtic del pacient (mm).
      * 
@@ -85,10 +86,11 @@ export class ProsthesisPort
      * Aquesta funció determina quines branques poden cobrir la distància requerida
      * mantenint un sobredimensionament dins del rang segur (10%–30%).
      *
-     * Avalua tant combinacions d’una sola branca com de dues branques,
+     * Avalua tant combinacions d'una sola branca com de dues branques,
      * tenint en compte el solapament mínim entre components (30 mm).
      *
-     * @param targetIliacDiameter - Diàmetre objectiu de l’artèria ilíaca (mm).
+     * @param side - Indica el costat respecte al cos insertat
+     * @param targetIliacDiameter - Diàmetre objectiu de l'artèria ilíaca (mm).
      * @param bodyLength - Longitud del cos principal seleccionat (mm).
      * @param legLength - Longitud de la cama de la pròtesi (curta o llarga) (mm).
      * @param totalAnatomicalDistance - Distància anatòmica total a cobrir (mm).
@@ -96,6 +98,7 @@ export class ProsthesisPort
      * @returns Objecte amb opcions de branques compatibles i informació addicional.
      */
     findBranchOptions(
+        side: BranchSide,
         targetIliacDiameter: number,
         bodyLength: number,
         legLength: number,
@@ -108,6 +111,7 @@ export class ProsthesisPort
     }
     {
         return this.prosthesisService.findBranchOptions(
+            side,
             targetIliacDiameter,
             bodyLength,
             legLength,
