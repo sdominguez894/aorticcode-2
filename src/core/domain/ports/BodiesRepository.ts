@@ -1,4 +1,4 @@
-import type { Body } from '/static/domain/entities/Body';
+import type { Body } from '../entities/Body';
 
 /**
  * Outbound port for fetching prosthesis bodies.
