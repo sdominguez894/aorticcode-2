@@ -1,9 +1,9 @@
 -- =====================================================================
--- Migration: 20251018T214300_initial_schema.sql
+-- Migration: 20251018T163500_initial_schema.sql
 -- Purpose : Create core tables (bodies, branches), audit logging system,
 --           and Row Level Security (RLS) policies for read-only frontend.
--- Author  : (your name)
--- Date    : 2025-10-18 21:43 UTC
+-- Author  : Sergio Dominguez Moreno
+-- Date    : 2025-10-18 16:35 UTC
 -- =====================================================================
 
 -- ---------------------------------------------------------------------
@@ -153,8 +153,8 @@ GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO service_role;
 -- ---------------------------------------------------------------------
 -- SUMMARY
 -- ---------------------------------------------------------------------
--- ✔ Frontend (publishable key) → read-only access via RLS
--- ✔ Admin (service_role) → full read/write via dashboard
--- ✔ All changes → logged automatically in audit_log
--- ✔ audit_log table → private and RLS-protected
+-- Frontend (publishable key) → read-only access via RLS
+-- Admin (service_role) → full read/write via dashboard
+-- All changes → logged automatically in audit_log
+-- audit_log table → private and RLS-protected
 -- =====================================================================
