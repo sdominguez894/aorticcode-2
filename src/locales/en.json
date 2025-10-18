@@ -56,7 +56,9 @@
     "ipsilateralDistance": "Distance from neck to ipsilateral distal sealing (mm)",
     "calculateButton": "Calculate Prosthesis",
     "validationError": "Please enter all values correctly",
-    "calculationSuccess": "Calculation completed"
+    "calculationSuccess": "Calculation completed",
+    "calculationError": "Error calculating prosthesis",
+    "noCompatibleBody": "No compatible main body found"
   },
   "diagram": {
     "title": "Patient measurements diagram",

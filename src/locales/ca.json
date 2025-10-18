@@ -56,7 +56,9 @@
     "ipsilateralDistance": "Distància des del coll fins al segellat distal ipsilateral (mm)",
     "calculateButton": "Calcular Pròtesi",
     "validationError": "Si us plau, introdueix tots els valors correctament",
-    "calculationSuccess": "Càlcul completat"
+    "calculationSuccess": "Càlcul completat",
+    "calculationError": "Error en calcular la pròtesi",
+    "noCompatibleBody": "No s'ha trobat cap cos principal compatible"
   },
   "diagram": {
     "title": "Diagrama de les mesures del pacient",

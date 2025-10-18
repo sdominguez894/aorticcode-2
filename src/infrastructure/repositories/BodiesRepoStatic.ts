@@ -21,7 +21,7 @@ export class BodiesRepoStatic implements BodiesRepository
     {
         if( !BodiesRepoStatic._cache )
         {
-            const bodiesModule = await import(BodiesRepoStatic.BODIES_URL);
+            const bodiesModule = await import('@/infrastructure/data/bodies');
 
             BodiesRepoStatic._cache = bodiesModule.bodies.map(
                 (bodyData: ConstructorParameters<typeof Body>[0]) => new Body(bodyData)

@@ -56,7 +56,9 @@
     "ipsilateralDistance": "Distancia desde el cuello hasta el sellado distal ipsilateral (mm)",
     "calculateButton": "Calcular Prótesis",
     "validationError": "Por favor, introduce todos los valores correctamente",
-    "calculationSuccess": "Cálculo completado"
+    "calculationSuccess": "Cálculo completado",
+    "calculationError": "Error al calcular la prótesis",
+    "noCompatibleBody": "No se ha encontrado ningún cuerpo principal compatible"
   },
   "diagram": {
     "title": "Diagrama de las medidas del paciente",

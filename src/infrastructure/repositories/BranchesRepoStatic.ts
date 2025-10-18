@@ -28,7 +28,7 @@ export class BranchesRepoStatic implements BranchesRepository
         // Si encara no està carregat → carregar i guardar a la memòria cau
         if (!BranchesRepoStatic._cache)
         {
-            const branchesModule = await import(BranchesRepoStatic.BRANCHES_URL);
+            const branchesModule = await import('@/infrastructure/data/branches');
 
             // Obtenim les branques del mòdul carregat i generem objectes Branch que guardem a la cache
             BranchesRepoStatic._cache = branchesModule.branches.map(
