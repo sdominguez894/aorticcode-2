@@ -7,7 +7,7 @@
 -- =====================================================================
 
 -- ---------------------------------------------------------------------
--- 1️⃣ CLEANUP (safe for re-running during development)
+-- CLEANUP (safe for re-running during development)
 -- ---------------------------------------------------------------------
 -- The CASCADE keyword ensures dependent triggers or views are also dropped.
 -- In production migrations, omit CASCADE to avoid accidental drops.
@@ -16,7 +16,7 @@ DROP TABLE IF EXISTS public.bodies CASCADE;
 DROP TABLE IF EXISTS public.branches CASCADE;
 
 -- ---------------------------------------------------------------------
--- 2️⃣ MAIN DATA TABLES
+-- MAIN DATA TABLES
 -- ---------------------------------------------------------------------
 
 -- TABLE: bodies
@@ -42,7 +42,7 @@ CREATE TABLE public.branches (
 );
 
 -- ---------------------------------------------------------------------
--- 3️⃣ AUDIT LOGGING SYSTEM
+-- AUDIT LOGGING SYSTEM
 -- ---------------------------------------------------------------------
 
 -- TABLE: audit_log
@@ -66,7 +66,7 @@ RETURNS TRIGGER AS $$
 DECLARE
   uid UUID;
 BEGIN
-  uid := auth.uid(); -- capture Supabase Auth user (null for service_role)
+  uid := auth.uid(); -- Capture Supabase Auth user (null for service_role)
   INSERT INTO public.audit_log (
     table_name, record_id, action, old_data, new_data, changed_by, db_user, changed_at
   )
@@ -94,7 +94,7 @@ AFTER INSERT OR UPDATE OR DELETE ON public.branches
 FOR EACH ROW EXECUTE FUNCTION public.audit_trigger_fn();
 
 -- ---------------------------------------------------------------------
--- 4️⃣ ROW LEVEL SECURITY (RLS)
+-- ROW LEVEL SECURITY (RLS)
 -- ---------------------------------------------------------------------
 -- Enable RLS to enforce read-only behavior for public access.
 ALTER TABLE public.bodies ENABLE ROW LEVEL SECURITY;
@@ -140,7 +140,7 @@ CREATE POLICY "service_role_read_audit"
   USING (true);
 
 -- ---------------------------------------------------------------------
--- 5️⃣ PRIVILEGES
+-- PRIVILEGES
 -- ---------------------------------------------------------------------
 -- Revoke write privileges from public to prevent unauthorized changes.
 REVOKE INSERT, UPDATE, DELETE ON public.bodies FROM PUBLIC;
@@ -151,7 +151,7 @@ REVOKE ALL ON public.audit_log FROM PUBLIC;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO service_role;
 
 -- ---------------------------------------------------------------------
--- ✅ SUMMARY
+-- SUMMARY
 -- ---------------------------------------------------------------------
 -- ✔ Frontend (publishable key) → read-only access via RLS
 -- ✔ Admin (service_role) → full read/write via dashboard
