@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import ThemeToggle from "@/components/ThemeToggle";
+import LanguageSelector from "@/components/LanguageSelector";
 
 /**
  * Mobile navigation component with burger menu
@@ -30,7 +32,7 @@ const MobileNav = () => {
             className="fixed inset-0 z-50 bg-black/80 md:hidden"
             onClick={() => setOpen(false)}
           />
-          <div className="fixed right-0 top-0 z-50 h-full w-[300px] bg-card border-l shadow-lg md:hidden animate-in slide-in-from-right duration-300">
+          <div className="fixed right-0 top-0 z-50 h-full w-[300px] bg-card border-l shadow-lg md:hidden animate-in slide-in-from-right duration-300 flex flex-col">
             <div className="flex items-center justify-between p-4 border-b">
               <h2 className="text-lg font-semibold">{t('nav.menu')}</h2>
               <Button
@@ -41,29 +43,37 @@ const MobileNav = () => {
                 <X className="h-5 w-5" />
               </Button>
             </div>
-            <nav className="flex flex-col gap-4 p-6">
+            
+            <nav className="flex flex-col gap-2 p-6 flex-1">
               <Link
                 to="/"
-                className="text-lg font-medium text-primary transition-colors py-2"
+                className="text-lg font-medium text-primary transition-colors py-3 px-2 rounded-md hover:bg-accent"
                 onClick={() => setOpen(false)}
               >
                 {t('nav.home')}
               </Link>
               <Link
                 to="/about"
-                className="text-lg font-medium text-foreground hover:text-primary transition-colors py-2"
+                className="text-lg font-medium text-foreground hover:text-primary transition-colors py-3 px-2 rounded-md hover:bg-accent"
                 onClick={() => setOpen(false)}
               >
                 {t('nav.about')}
               </Link>
               <Link
                 to="/legal"
-                className="text-lg font-medium text-foreground hover:text-primary transition-colors py-2"
+                className="text-lg font-medium text-foreground hover:text-primary transition-colors py-3 px-2 rounded-md hover:bg-accent"
                 onClick={() => setOpen(false)}
               >
                 {t('nav.legal')}
               </Link>
             </nav>
+
+            <div className="border-t p-6">
+              <div className="flex items-center justify-center gap-4">
+                <ThemeToggle />
+                <LanguageSelector />
+              </div>
+            </div>
           </div>
         </>
       )}
