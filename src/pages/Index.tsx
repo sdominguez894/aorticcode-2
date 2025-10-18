@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import Logo from "@/components/Logo";
 import LanguageSelector from "@/components/LanguageSelector";
 import ThemeToggle from "@/components/ThemeToggle";
+import MobileNav from "@/components/MobileNav";
 import MeasurementForm from "@/components/MeasurementForm";
 import AnatomicalDiagram from "@/components/AnatomicalDiagram";
 import ResultsCard from "@/components/ResultsCard";
@@ -84,8 +85,11 @@ const Index = () => {
               </Link>
             </nav>
             <div className="flex items-center gap-3">
-              <ThemeToggle />
-              <LanguageSelector />
+              <div className="hidden md:flex items-center gap-3">
+                <ThemeToggle />
+                <LanguageSelector />
+              </div>
+              <MobileNav />
             </div>
           </div>
         </div>

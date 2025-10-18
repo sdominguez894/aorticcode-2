@@ -2,7 +2,8 @@
   "nav": {
     "home": "Home",
     "about": "About us",
-    "legal": "Legal notice"
+    "legal": "Legal notice",
+    "menu": "Menu"
   },
   "home": {
     "title": "Aortic Code Calculator",

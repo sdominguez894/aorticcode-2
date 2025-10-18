@@ -2,7 +2,8 @@
   "nav": {
     "home": "Inicio",
     "about": "Sobre nosotros",
-    "legal": "Aviso legal"
+    "legal": "Aviso legal",
+    "menu": "Menú"
   },
   "home": {
     "title": "Calculadora del Código Aórtico",

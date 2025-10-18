@@ -2,7 +2,8 @@
   "nav": {
     "home": "Inici",
     "about": "Sobre nosaltres",
-    "legal": "Avís legal"
+    "legal": "Avís legal",
+    "menu": "Menú"
   },
   "home": {
     "title": "Calculadora del Codi Aòrtic",
