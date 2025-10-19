@@ -1,13 +1,16 @@
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { HTMLAttributes, useEffect, useState } from "react";
+import { cn } from "@/lib/utils"; // Shadcn helper for merging classes
+
+type ThemeToggleProps = HTMLAttributes<HTMLButtonElement>
 
 /**
  * Theme toggle component
  * Switches between light and dark themes with animated icon transitions
  */
-const ThemeToggle = () => {
+const ThemeToggle = ({ className, ...props }: ThemeToggleProps) => {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -17,7 +20,11 @@ const ThemeToggle = () => {
 
   if (!mounted) {
     return (
-      <Button variant="ghost" size="icon" className="relative h-10 w-10">
+      <Button variant="ghost" 
+              size="icon" 
+              className={cn("relative h-10 w-10", className)}
+              {...props}
+      >
         <Sun className="h-5 w-5" />
       </Button>
     );

@@ -15,6 +15,10 @@ const MobileNav = () => {
 
   return (
     <>
+
+      <ThemeToggle className="md:hidden"/>
+      <LanguageSelector className="md:hidden"/>
+
       <Button 
         variant="ghost" 
         size="icon" 
@@ -68,12 +72,6 @@ const MobileNav = () => {
               </Link>
             </nav>
 
-            <div className="border-t p-6">
-              <div className="flex items-center justify-center gap-4">
-                <ThemeToggle />
-                <LanguageSelector />
-              </div>
-            </div>
           </div>
         </>
       )}
