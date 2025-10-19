@@ -5,7 +5,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Globe } from "lucide-react";
 import { HTMLAttributes } from "react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils"; // Shadcn helper for merging class names
@@ -22,9 +21,9 @@ type Language = {
 
 /** Available language options */
 const languages: Language[] = [
-  { code: "ca", name: "Català", flag: "🇪🇸" },
-  { code: "es", name: "Castellano", flag: "🇪🇸" },
-  { code: "en", name: "English", flag: "🇬🇧" },
+  { code: "ca", name: "Català", flag: "/images/flags/ca.svg" },
+  { code: "es", name: "Castellano", flag: "/images/flags/es.svg" },
+  { code: "en", name: "English", flag: "/images/flags/en.svg" },
 ];
 
 type LanguageSelectorProps = HTMLAttributes<HTMLDivElement>;
@@ -34,10 +33,12 @@ type LanguageSelectorProps = HTMLAttributes<HTMLDivElement>;
  * Dropdown menu for switching between available languages
  */
 const LanguageSelector = ({ className, ...props }: LanguageSelectorProps) => {
+  
+  // Get i18n instance from react-i18next
   const { i18n } = useTranslation();
-
-  const currentLanguage =
-    languages.find((lang) => lang.code === i18n.language) || languages[0];
+  
+  // Determine the current language
+  const currentLanguage = languages.find( (lang) => lang.code === i18n.language ) || languages[0];
 
   /**
    * Changes the application language
@@ -48,23 +49,30 @@ const LanguageSelector = ({ className, ...props }: LanguageSelectorProps) => {
   };
 
   return (
-    <div className={cn("relative", className)} {...props}>
+    <div className={ cn("relative", className) } {...props}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="sm" className="gap-2">
-            <Globe className="h-4 w-4" />
-            <span>{currentLanguage.flag}</span>
+            <img src={currentLanguage.flag}
+                 alt={`${currentLanguage.name}`}
+                 className="w-5 h-5 rounded-sm"
+                 loading="lazy" />
+            
             <span className="hidden sm:inline">{currentLanguage.name}</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-48 bg-card">
-          {languages.map((lang) => (
+          {languages.map( (lang) => (
             <DropdownMenuItem
               key={lang.code}
               onClick={() => handleLanguageChange(lang.code)}
-              className="cursor-pointer"
+              className="cursor-pointer flex items-center"
             >
-              <span className="mr-2">{lang.flag}</span>
+              <img src={lang.flag}
+                   alt={`${lang.name}`}
+                   className="w-5 h-5 mr-2 rounded-sm"
+                   loading="lazy"
+              />
               {lang.name}
             </DropdownMenuItem>
           ))}
