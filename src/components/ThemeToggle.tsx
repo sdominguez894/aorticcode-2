@@ -18,7 +18,7 @@ const ThemeToggle = ({ className, ...props }: ThemeToggleProps) => {
     setMounted(true);
   }, []);
 
-  if (!mounted) {
+  if ( !mounted ) {
     return (
       <Button variant="ghost" 
               size="icon" 
@@ -34,8 +34,9 @@ const ThemeToggle = ({ className, ...props }: ThemeToggleProps) => {
     <Button
       variant="ghost"
       size="icon"
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="relative h-10 w-10 rounded-full transition-all duration-300 hover:bg-accent/80"
+      onClick={() => setTheme( theme === "dark" ? "light" : "dark" )}
+      className={ cn( "relative h-10 w-10 rounded-full transition-all duration-300 hover:bg-accent/80", className ) }
+      {...props}
     >
       <Sun className="h-5 w-5 rotate-0 scale-100 transition-all duration-300 dark:-rotate-90 dark:scale-0" />
       <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all duration-300 dark:rotate-0 dark:scale-100" />
