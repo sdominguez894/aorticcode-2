@@ -32,6 +32,10 @@ cd <YOUR_PROJECT_NAME>
 # Step 3: Install the necessary dependencies.
 npm i
 
+If that did not work try: npm i --legacy-peer-deps
+This tells npm to ignore peer dependency version mismatches and just install the packages.
+It will work if there are not breaking changes, just version mismatches.
+
 # Step 4: Start the development server with auto-reloading and an instant preview.
 npm run dev
 ```
