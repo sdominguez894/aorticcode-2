@@ -22,12 +22,12 @@ const Logo = () => {
           The `w-40` class defines the image width; adjust as needed.
         */}
         <img
-          src="/aorticode-logo-light.png"
+          src="/images/logo/aorticode-logo-light.png"
           alt="AORTIC CODE logo"
           className="block dark:hidden w-40 h-auto"
         />
         <img
-          src="/aorticode-logo-dark.png"
+          src="/images/logo/aorticode-logo-dark.png"
           alt="AORTIC CODE logo (dark mode)"
           className="hidden dark:block w-40 h-auto"
         />
@@ -38,7 +38,7 @@ const Logo = () => {
           - Small, subtle text below the main logo image.
         */}
         <p className="text-sm text-muted-foreground">
-          Calculadora de Pròtesis EVAR
+          {t('home.title')}
         </p>
       </div>
     </div>
