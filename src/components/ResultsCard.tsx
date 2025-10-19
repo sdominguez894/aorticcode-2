@@ -139,7 +139,7 @@ const ResultsCard = ({ measurements, results, isLoading }: ResultsCardProps) => 
         {/* Contralateral Branch */}
         <div className="border-l-4 border-secondary pl-4">
           <h3 className="font-semibold text-lg mb-3 text-secondary">
-            ← {t('results.contralateralBranch')}
+            {t('results.contralateralBranch')}
           </h3>
           <div className="space-y-3">
             <div className="text-sm space-y-1">
@@ -186,7 +186,7 @@ const ResultsCard = ({ measurements, results, isLoading }: ResultsCardProps) => 
         {/* Ipsilateral Branch */}
         <div className="border-l-4 border-accent pl-4">
           <h3 className="font-semibold text-lg mb-3 text-accent">
-            → {t('results.ipsilateralBranch')}
+            {t('results.ipsilateralBranch')}
           </h3>
           <div className="space-y-3">
             <div className="text-sm space-y-1">
