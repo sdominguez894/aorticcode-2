@@ -1,10 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import Logo from "@/components/Logo";
-import LanguageSelector from "@/components/LanguageSelector";
-import ThemeToggle from "@/components/ThemeToggle";
-import MobileNav from "@/components/MobileNav";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 import MeasurementForm from "@/components/MeasurementForm";
 import AnatomicalDiagram from "@/components/AnatomicalDiagram";
 import ResultsCard from "@/components/ResultsCard";
@@ -68,32 +65,9 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background bg-gradient-radial">
+     
       {/* Header */}
-      <header className="border-b bg-card/50 backdrop-blur-md sticky top-0 z-50 shadow-soft">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Logo />
-            <nav className="hidden md:flex items-center gap-6">
-              <Link to="/" className="text-sm font-medium text-primary transition-colors">
-                {t('nav.home')}
-              </Link>
-              <Link to="/about" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-                {t('nav.about')}
-              </Link>
-              <Link to="/legal" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-                {t('nav.legal')}
-              </Link>
-            </nav>
-            <div className="flex items-center gap-3">
-              <div className="hidden md:flex items-center gap-3">
-                <ThemeToggle />
-                <LanguageSelector />
-              </div>
-              <MobileNav />
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8 md:py-12">
@@ -120,11 +94,8 @@ const Index = () => {
       </main>
 
       {/* Footer */}
-      <footer className="border-t bg-card/30 backdrop-blur-sm mt-16">
-        <div className="container mx-auto px-4 py-6 text-center text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} Aortic Code. {t('home.footer')}</p>
-        </div>
-      </footer>
+      <Footer />
+
     </div>
   );
 };
