@@ -153,7 +153,7 @@ const AnatomicalDiagram = ({ measurements }: AnatomicalDiagramProps) => {
           {t('diagram.description')}
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex items-center justify-center p-8">
+      <CardContent className="flex items-center justify-center p-8 pt-0">
         <div 
           ref={svgContainerRef}
           className="relative w-full max-w-2xl"
