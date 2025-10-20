@@ -63,6 +63,24 @@ This project is built with:
 - React
 - shadcn-ui
 - Tailwind CSS
+- Supabase
+
+## How to update the types in the app when there are changes in the schema?
+
+Supabase allow us to generate full TypeScript definitions of the schema automatically.
+
+To generate the schema types, install, log in into the Supabase CLI ([Supabase docs -> Generate types](https://supabase.com/docs/guides/api/generating-types) and execute the following commands:
+
+```sh
+# Install the Supabase CLI as a dev dependency
+npm i supabase@">=1.8.1" --save-dev --legacy-peer-deps
+
+# Login with your Personal Access Token
+npx supabase login
+
+# Generate the types
+npx supabase gen types typescript --project-id wgwadotsgwhhqdgkcqbs --schema public > src/infrastructure/supabase/types.ts
+```
 
 ## How can I deploy this project?
 
