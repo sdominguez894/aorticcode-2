@@ -3,8 +3,6 @@ import { useTranslation } from "react-i18next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Logo from "@/components/Logo";
-import LanguageSelector from "@/components/LanguageSelector";
-import ThemeToggle from "@/components/ThemeToggle";
 import { AlertTriangle, Shield, FileText, Scale } from "lucide-react";
 
 /**
