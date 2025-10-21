@@ -1,9 +1,9 @@
 -- =====================================================================
--- Migration: 20251018T163500_initial_schema.sql
--- Purpose : Create core tables (bodies, branches), audit logging system,
---           and Row Level Security (RLS) policies for read-only frontend.
--- Author  : Sergio Dominguez Moreno
--- Date    : 2025-10-18 17:27 UTC
+-- Migration: 20251018T163500_initial_schema.up.sql
+-- Purpose  : Create core tables (bodies, branches), audit logging system,
+--            and Row Level Security (RLS) policies for read-only frontend.
+-- Author   : Sergio Dominguez Moreno
+-- Date     : 2025-10-18 17:27 UTC
 -- =====================================================================
 
 -- ---------------------------------------------------------------------
