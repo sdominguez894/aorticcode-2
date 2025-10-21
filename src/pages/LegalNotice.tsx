@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import Logo from "@/components/Logo";
 import { AlertTriangle, Shield, FileText, Scale } from "lucide-react";
 
 /**
