@@ -1,8 +1,12 @@
-# Welcome to your Lovable project
+# Welcome to the Aorticcode Lovable project
+
+This application provides recommendations for aortic prosthesis sizes, main body and branches, based on the patient’s anatomical measurements.
+
+To use Aorticcode go to: https://aortic-vision-revive.lovable.app/
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/ccedfa2e-ee49-437e-accf-d40f872888ed
+**Lovable project URL**: https://lovable.dev/projects/ccedfa2e-ee49-437e-accf-d40f872888ed
 
 ## How can I edit this code?
 
