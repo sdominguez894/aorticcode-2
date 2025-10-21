@@ -2,9 +2,6 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import Logo from "@/components/Logo";
-import LanguageSelector from "@/components/LanguageSelector";
-import ThemeToggle from "@/components/ThemeToggle";
 import { Users, Stethoscope, Code } from "lucide-react";
 
 /**
