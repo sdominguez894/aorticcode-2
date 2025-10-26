@@ -6,6 +6,8 @@ To use Aorticcode go to: https://aorticcode.lovable.app/
 
 ## Project info
 
+**Git repository URL (currently a private repo)**: https://github.com/sdominguez894/aortic-vision-revive/commit/5a5d20fd5ec1cf0dc4a2d8c9cc8d9e161d08f709
+
 **Lovable project URL**: https://lovable.dev/projects/ccedfa2e-ee49-437e-accf-d40f872888ed
 
 ## How can I edit this code?
