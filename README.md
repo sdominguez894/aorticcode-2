@@ -2,7 +2,7 @@
 
 This application provides recommendations for aortic prosthesis sizes, main body and branches, based on the patient’s anatomical measurements.
 
-To use Aorticcode go to: https://aortic-vision-revive.lovable.app/
+To use Aorticcode go to: https://aorticcode.lovable.app/
 
 ## Project info
 
