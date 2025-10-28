@@ -89,7 +89,6 @@ export class ProsthesisPort
      * Avalua tant combinacions d'una sola branca com de dues branques,
      * tenint en compte el solapament mínim entre components (30 mm).
      *
-     * @param side - Indica el costat respecte al cos insertat
      * @param targetIliacDiameter - Diàmetre objectiu de l'artèria ilíaca (mm).
      * @param bodyLength - Longitud del cos principal seleccionat (mm).
      * @param legLength - Longitud de la cama de la pròtesi (curta o llarga) (mm).
@@ -97,8 +96,7 @@ export class ProsthesisPort
      * 
      * @returns Objecte amb opcions de branques compatibles i informació addicional.
      */
-    findBranchOptions(
-        side: BranchSide,
+    findIpsilateralBranchOptions(
         targetIliacDiameter: number,
         bodyLength: number,
         legLength: number,
@@ -110,12 +108,48 @@ export class ProsthesisPort
         compatibleBranches: Array<Branch>;
     }
     {
-        return this.prosthesisService.findBranchOptions(
-            side,
-            targetIliacDiameter,
-            bodyLength,
-            legLength,
-            totalAnatomicalDistance
-        );
+        return this.prosthesisService.findIpsilateralBranchOptions(
+                                                                        targetIliacDiameter,
+                                                                        bodyLength,
+                                                                        legLength,
+                                                                        totalAnatomicalDistance
+                                                                    );
     }
+
+    /**
+     * Troba les combinacions de branques ilíaques compatibles per les distàncies i diàmetres donats.
+     *
+     * Aquesta funció determina quines branques poden cobrir la distància requerida
+     * mantenint un sobredimensionament dins del rang segur (10%–30%).
+     *
+     * Avalua tant combinacions d'una sola branca com de dues branques,
+     * tenint en compte el solapament mínim entre components (30 mm).
+     *
+     * @param targetIliacDiameter - Diàmetre objectiu de l'artèria ilíaca (mm).
+     * @param bodyLength - Longitud del cos principal seleccionat (mm).
+     * @param legLength - Longitud de la cama de la pròtesi (curta o llarga) (mm).
+     * @param totalAnatomicalDistance - Distància anatòmica total a cobrir (mm).
+     * 
+     * @returns Objecte amb opcions de branques compatibles i informació addicional.
+     */
+    findContralateralBranchOptions(
+        targetIliacDiameter: number,
+        bodyLength: number,
+        legLength: number,
+        totalAnatomicalDistance: number
+    ): {
+        options: Array<BranchOption>;
+        needsBridge: boolean;
+        remainingDistance: number;
+        compatibleBranches: Array<Branch>;
+    }
+    {
+        return this.prosthesisService.findContralateralBranchOptions(
+                                                                        targetIliacDiameter,
+                                                                        bodyLength,
+                                                                        legLength,
+                                                                        totalAnatomicalDistance
+                                                                    );
+    }
+
 }

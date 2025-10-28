@@ -66,22 +66,20 @@ export const useProsthesisService = () => {
       }
 
       // Calculate contralateral branch options
-      const contralateralResult = service.findBranchOptions(
-                                                              BranchSide.CONTRALATERAL,
-                                                              measurements.contralateralIliacDiameter,
-                                                              mainBody.body.length,
-                                                              mainBody.body.shortLeg,
-                                                              measurements.contralateralDistance
-                                                            );
+      const contralateralResult = service.findContralateralBranchOptions(
+                                                                          measurements.contralateralIliacDiameter,
+                                                                          mainBody.body.length,
+                                                                          mainBody.body.shortLeg,
+                                                                          measurements.contralateralDistance
+                                                                        );
 
       // Calculate ipsilateral branch options
-      const ipsilateralResult = service.findBranchOptions(
-                                                            BranchSide.IPSILATERAL,
-                                                            measurements.ipsilateralIliacDiameter,
-                                                            mainBody.body.length,
-                                                            mainBody.body.longLeg,
-                                                            measurements.ipsilateralDistance
-                                                          );
+      const ipsilateralResult = service.findIpsilateralBranchOptions(
+                                                                      measurements.ipsilateralIliacDiameter,
+                                                                      mainBody.body.length,
+                                                                      mainBody.body.longLeg,
+                                                                      measurements.ipsilateralDistance
+                                                                    );
 
       return {
         mainBody,

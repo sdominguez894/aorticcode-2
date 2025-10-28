@@ -113,7 +113,6 @@ export class ProsthesisService
      * Avalua tant combinacions d’una sola branca com de dues branques,
      * tenint en compte el solapament mínim entre components (30 mm).
      *
-     * @param side - Indica el costat respecte al cos insertat 
      * @param targetIliacDiameter - Diàmetre objectiu de l’artèria ilíaca (mm).
      * @param bodyLength - Longitud del cos principal seleccionat (mm).
      * @param legLength - Longitud de la cama de la pròtesi (curta o llarga) (mm).
@@ -121,8 +120,7 @@ export class ProsthesisService
      * 
      * @returns Objecte amb opcions de branques compatibles i informació addicional.
      */
-    public findBranchOptions(
-        side: BranchSide,
+    public findIpsilateralBranchOptions(
         targetIliacDiameter: number,
         bodyLength: number,
         legLength: number,
@@ -134,21 +132,22 @@ export class ProsthesisService
         compatibleBranches: Branch[];
     }
     {
+        const side = BranchSide.IPSILATERAL;
+
         const allBranches = this._branches;
 
         // Rang acceptable de sobredimensionament: 10%–30%
         const minimumAllowedDiameter = targetIliacDiameter * 1.10;
         const maximumAllowedDiameter = targetIliacDiameter * 1.30;
 
-        const compatibleBranches = allBranches.filter(branch =>
-            branch.diameter >= minimumAllowedDiameter &&
-            branch.diameter <= maximumAllowedDiameter
-        );
+        const compatibleBranches = allBranches.filter( branch =>
+                                                            branch.diameter >= minimumAllowedDiameter &&
+                                                            branch.diameter <= maximumAllowedDiameter
+                                                     );
 
         const baseCoverage = bodyLength + legLength;
 
-        const remainingDistance =
-            totalAnatomicalDistance - baseCoverage + ProsthesisService.MINIMUM_OVERLAP_MM;
+        const remainingDistance = totalAnatomicalDistance - baseCoverage + ProsthesisService.MINIMUM_OVERLAP_MM;
 
         const branchOptions: BranchOption[] = [];
 
@@ -157,14 +156,11 @@ export class ProsthesisService
         // -------------------------------------------------------------------------
         for (const singleBranch of compatibleBranches)
         {
-            const totalCoverage =
-                baseCoverage + singleBranch.length - ProsthesisService.MINIMUM_OVERLAP_MM;
+            const totalCoverage = baseCoverage + singleBranch.length - ProsthesisService.MINIMUM_OVERLAP_MM;
 
             if (totalCoverage >= totalAnatomicalDistance)
             {
-                const oversizingPercent = parseFloat(
-                    ((singleBranch.diameter / targetIliacDiameter - 1) * 100).toFixed(1)
-                );
+                const oversizingPercent = parseFloat( ( (singleBranch.diameter / targetIliacDiameter - 1) * 100 ).toFixed(1) );
 
                 branchOptions.push(
                     new BranchOption({
@@ -191,22 +187,16 @@ export class ProsthesisService
                     continue;
                 }
 
-                const totalCoverage =
-                    baseCoverage +
-                    firstBranch.length +
-                    secondBranch.length -
-                    2 * ProsthesisService.MINIMUM_OVERLAP_MM;
+                const totalCoverage = baseCoverage + firstBranch.length + secondBranch.length 
+                                      - ( 2 * ProsthesisService.MINIMUM_OVERLAP_MM );
 
-                const combinedLength =
-                    firstBranch.length + secondBranch.length - ProsthesisService.MINIMUM_OVERLAP_MM;
+                const combinedLength = firstBranch.length + secondBranch.length - ProsthesisService.MINIMUM_OVERLAP_MM;
 
                 const isLongEnough = combinedLength > remainingDistance;
 
                 if (totalCoverage >= totalAnatomicalDistance && isLongEnough)
                 {
-                    const oversizingPercent = parseFloat(
-                        ((firstBranch.diameter / targetIliacDiameter - 1) * 100).toFixed(1)
-                    );
+                    const oversizingPercent = parseFloat( ( (firstBranch.diameter / targetIliacDiameter - 1) * 100 ).toFixed(1) );
 
                     branchOptions.push(
                         new BranchOption({
@@ -225,13 +215,137 @@ export class ProsthesisService
         // -------------------------------------------------------------------------
         // Determina si cal una extensió ("pont") addicional
         // -------------------------------------------------------------------------
-        const longestAvailableBranchLength = Math.max(
-            ...compatibleBranches.map(b => b.length),
-            0
-        );
+        const longestAvailableBranchLength = Math.max( ...compatibleBranches.map(b => b.length), 0 );
+            
 
-        const requiresBridgeExtension =
-            branchOptions.length === 0 || remainingDistance > longestAvailableBranchLength;
+        const requiresBridgeExtension = branchOptions.length === 0 || remainingDistance > longestAvailableBranchLength;
+
+        // Ordena les opcions pel menor excés (ajust més precís primer)
+        branchOptions.sort( (a, b) => a.excess - b.excess );
+
+        return {
+            options: branchOptions,
+            needsBridge: requiresBridgeExtension,
+            remainingDistance,
+            compatibleBranches
+        };
+    }
+
+
+/**
+     * Troba les combinacions de branques ilíaques compatibles per les distàncies i diàmetres donats.
+     *
+     * Aquesta funció determina quines branques poden cobrir la distància requerida
+     * mantenint un sobredimensionament dins del rang segur (10%–30%).
+     *
+     * Avalua tant combinacions d’una sola branca com de dues branques,
+     * tenint en compte el solapament mínim entre components (30 mm).
+     *
+     * @param targetIliacDiameter - Diàmetre objectiu de l’artèria ilíaca (mm).
+     * @param bodyLength - Longitud del cos principal seleccionat (mm).
+     * @param legLength - Longitud de la cama de la pròtesi (curta o llarga) (mm).
+     * @param totalAnatomicalDistance - Distància anatòmica total a cobrir (mm).
+     * 
+     * @returns Objecte amb opcions de branques compatibles i informació addicional.
+     */
+    public findContralateralBranchOptions(
+        targetIliacDiameter: number,
+        bodyLength: number,
+        legLength: number,
+        totalAnatomicalDistance: number
+    ): {
+        options: BranchOption[];
+        needsBridge: boolean;
+        remainingDistance: number;
+        compatibleBranches: Branch[];
+    }
+    {
+        const side = BranchSide.CONTRALATERAL;
+        
+        const allBranches = this._branches;
+
+        // Rang acceptable de sobredimensionament: 10%–30%
+        const minimumAllowedDiameter = targetIliacDiameter * 1.10;
+        const maximumAllowedDiameter = targetIliacDiameter * 1.30;
+
+        // Filtra les branques compatibles dins del rang de diàmetres
+        const compatibleBranches = allBranches.filter( branch =>
+                                                            branch.diameter >= minimumAllowedDiameter &&
+                                                            branch.diameter <= maximumAllowedDiameter
+                                                     );
+
+        const baseCoverage = bodyLength + legLength;
+
+        const remainingDistance = totalAnatomicalDistance - baseCoverage + ProsthesisService.MINIMUM_OVERLAP_MM;
+
+        const branchOptions: BranchOption[] = [];
+
+        // -------------------------------------------------------------------------
+        // Combinacions d’una sola branca
+        // -------------------------------------------------------------------------
+        for (const singleBranch of compatibleBranches)
+        {
+            const totalCoverage = baseCoverage + singleBranch.length - ProsthesisService.MINIMUM_OVERLAP_MM;
+
+            if (totalCoverage >= totalAnatomicalDistance)
+            {
+                const oversizingPercent = parseFloat( ( (singleBranch.diameter / targetIliacDiameter - 1) * 100 ) .toFixed(1) );
+
+                branchOptions.push(
+                    new BranchOption({
+                        side: side,
+                        type: BranchType.SINGLE,
+                        branches: [singleBranch],
+                        totalCoverage,
+                        excess: totalCoverage - totalAnatomicalDistance,
+                        oversizing: oversizingPercent
+                    })
+                );
+            }
+        }
+
+        // -------------------------------------------------------------------------
+        // Combinacions de doble branca
+        // -------------------------------------------------------------------------
+        for (const firstBranch of compatibleBranches)
+        {
+            for (const secondBranch of compatibleBranches)
+            {
+                if (firstBranch.diameter !== secondBranch.diameter)
+                {
+                    continue;
+                }
+
+                const totalCoverage = baseCoverage + firstBranch.length + secondBranch.length - ( 2 * ProsthesisService.MINIMUM_OVERLAP_MM );
+
+                const combinedLength = firstBranch.length + secondBranch.length - ProsthesisService.MINIMUM_OVERLAP_MM;
+
+                const isLongEnough = combinedLength > remainingDistance;
+
+                if (totalCoverage >= totalAnatomicalDistance && isLongEnough)
+                {
+                    const oversizingPercent = parseFloat( ( (firstBranch.diameter / targetIliacDiameter - 1) * 100 ).toFixed(1) );
+
+                    branchOptions.push(
+                        new BranchOption({
+                            side: side,
+                            type: BranchType.DOUBLE,
+                            branches: [firstBranch, secondBranch],
+                            totalCoverage,
+                            excess: totalCoverage - totalAnatomicalDistance,
+                            oversizing: oversizingPercent
+                        })
+                    );
+                }
+            }
+        }
+
+        // -------------------------------------------------------------------------
+        // Determina si cal una extensió ("pont") addicional
+        // -------------------------------------------------------------------------
+        const longestAvailableBranchLength = Math.max( ...compatibleBranches.map(b => b.length), 0 );
+
+        const requiresBridgeExtension = branchOptions.length === 0 || remainingDistance > longestAvailableBranchLength;
 
         // Ordena les opcions pel menor excés (ajust més precís primer)
         branchOptions.sort((a, b) => a.excess - b.excess);
@@ -243,4 +357,5 @@ export class ProsthesisService
             compatibleBranches
         };
     }
+
 }
