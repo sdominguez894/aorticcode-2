@@ -2,26 +2,13 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import MeasurementForm from "@/components/MeasurementForm";
+import MeasurementsForm from "@/components/MeasurementsForm";
 import AnatomicalDiagram from "@/components/AnatomicalDiagram";
 import ResultsCard from "@/components/ResultsCard";
 import { useProsthesisService, ProsthesisResults } from "@/hooks/useProsthesisService";
 import { PatientMeasurements } from "@/domain/entities/PatientMeasurements";
 import { toast } from "sonner";
-
-/** Measurement data structure */
-type MeasurementData = {
-  /** Neck diameter in mm */
-  neckDiameter: string;
-  /** Contralateral iliac diameter in mm */
-  contralateralDiameter: string;
-  /** Ipsilateral iliac diameter in mm */
-  ipsilateralDiameter: string;
-  /** Distance to contralateral iliac in mm */
-  contralateralDistance: string;
-  /** Distance to ipsilateral iliac in mm */
-  ipsilateralDistance: string;
-};
+import { MeasurementData } from "@/types/measurement";
 
 /**
  * Index page component
@@ -40,7 +27,8 @@ const Index = () => {
   const handleCalculate = async (data: MeasurementData) => {
     setCalculatedMeasurements(data);
 
-    try {
+    try
+    {
       // Create PatientMeasurements entity
       const measurements = new PatientMeasurements({
         neckDiameter: parseFloat(data.neckDiameter),
@@ -54,10 +42,14 @@ const Index = () => {
       const results = await calculateProsthesis(measurements);
       setProsthesisResults(results);
 
-      if (!results.mainBody) {
+      if ( !results.mainBody )
+      {
         toast.error(t('form.noCompatibleBody'));
       }
-    } catch (error) {
+
+    }
+    catch (error)
+    {
       console.error('Error calculating prosthesis:', error);
       toast.error(t('form.calculationError'));
     }
@@ -74,7 +66,7 @@ const Index = () => {
         <div className="grid lg:grid-cols-2 gap-8 mb-8">
           {/* Left Column - Form */}
           <div>
-            <MeasurementForm onCalculate={handleCalculate} />
+            <MeasurementsForm onCalculate={handleCalculate} />
           </div>
 
           {/* Right Column - Diagram */}
@@ -85,11 +77,9 @@ const Index = () => {
 
         {/* Results Section */}
         <div className="max-w-4xl mx-auto">
-          <ResultsCard 
-            measurements={calculatedMeasurements} 
-            results={prosthesisResults}
-            isLoading={isLoading}
-          />
+          <ResultsCard measurements={calculatedMeasurements} 
+                       results={prosthesisResults}
+                       isLoading={isLoading} />
         </div>
       </main>
 

@@ -6,33 +6,22 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Calculator } from "lucide-react";
 import { toast } from "sonner";
-
-/** Measurement data structure */
-type MeasurementData = {
-  /** Neck diameter in mm */
-  neckDiameter: string;
-  /** Contralateral iliac diameter in mm */
-  contralateralDiameter: string;
-  /** Ipsilateral iliac diameter in mm */
-  ipsilateralDiameter: string;
-  /** Distance to contralateral iliac in mm */
-  contralateralDistance: string;
-  /** Distance to ipsilateral iliac in mm */
-  ipsilateralDistance: string;
-};
+import { MeasurementData } from "@/types/measurement";
 
 /** Props for MeasurementForm component */
 type MeasurementFormProps = {
   /** Callback function triggered when form is submitted */
-  onCalculate: (data: MeasurementData) => void;
+  onCalculate: ( data: MeasurementData ) => void;
 };
 
 /**
  * Measurement form component
  * Collects anatomical measurements for EVAR prosthesis calculation
  */
-const MeasurementForm = ({ onCalculate }: MeasurementFormProps) => {
+const MeasurementForm = ( { onCalculate }: MeasurementFormProps ) => {
+  
   const { t } = useTranslation();
+  
   const [measurements, setMeasurements] = useState<MeasurementData>({
     neckDiameter: "24.5",
     contralateralDiameter: "18.0",
@@ -46,11 +35,13 @@ const MeasurementForm = ({ onCalculate }: MeasurementFormProps) => {
    * @param e - Form event
    */
   const handleSubmit = (e: React.FormEvent) => {
+    
     e.preventDefault();
     
     // Basic validation
     const values = Object.values(measurements);
-    if (values.some(v => !v || parseFloat(v) <= 0)) {
+    if ( values.some( v => !v || parseFloat(v) <= 0 ) )
+    {
       toast.error(t('form.validationError'));
       return;
     }

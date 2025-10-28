@@ -3,20 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 import { ProsthesisResults } from "@/hooks/useProsthesisService";
 import { BranchType } from "@/domain/enums/BranchType";
-
-/** Measurement data structure */
-type MeasurementData = {
-  /** Neck diameter in mm */
-  neckDiameter: string;
-  /** Contralateral iliac diameter in mm */
-  contralateralDiameter: string;
-  /** Ipsilateral iliac diameter in mm */
-  ipsilateralDiameter: string;
-  /** Distance to contralateral iliac in mm */
-  contralateralDistance: string;
-  /** Distance to ipsilateral iliac in mm */
-  ipsilateralDistance: string;
-};
+import { MeasurementData } from "@/types/measurement";
 
 /** Props for ResultsCard component */
 type ResultsCardProps = {
@@ -39,7 +26,7 @@ const ResultsCard = ({ measurements, results, isLoading }: ResultsCardProps) => 
     return (
       <Card className="w-full shadow-glass backdrop-blur-glass animate-slide-up" style={{ animationDelay: "0.2s" }}>
         <CardHeader>
-          <CardTitle className="text-2xl">🔄 {t('results.calculating')}</CardTitle>
+          <CardTitle className="text-2xl">{t('results.calculating')}</CardTitle>
           <CardDescription>
             {t('results.pleaseWait')}
           </CardDescription>
@@ -58,7 +45,7 @@ const ResultsCard = ({ measurements, results, isLoading }: ResultsCardProps) => 
     return (
       <Card className="w-full shadow-glass backdrop-blur-glass animate-slide-up" style={{ animationDelay: "0.2s" }}>
         <CardHeader>
-          <CardTitle className="text-2xl">🎯 {t('results.waitingTitle')}</CardTitle>
+          <CardTitle className="text-2xl">{t('results.waitingTitle')}</CardTitle>
           <CardDescription>
             {t('results.waitingDescription')}
           </CardDescription>

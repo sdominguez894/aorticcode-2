@@ -33,7 +33,8 @@ let count = 0;
  * Generates unique toast IDs
  * @returns Unique string ID
  */
-function genId() {
+function genId() 
+{
   count = (count + 1) % Number.MAX_SAFE_INTEGER;
   return count.toString();
 }
@@ -73,7 +74,9 @@ const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>();
  * @param toastId - Toast ID to remove
  */
 const addToRemoveQueue = (toastId: string) => {
-  if (toastTimeouts.has(toastId)) {
+  
+  if (toastTimeouts.has(toastId))
+  {
     return;
   }
 
@@ -208,7 +211,9 @@ function useToast() {
   const [state, setState] = React.useState<State>(memoryState);
 
   React.useEffect(() => {
+    
     listeners.push(setState);
+    
     return () => {
       const index = listeners.indexOf(setState);
       if (index > -1) {

@@ -1,21 +1,13 @@
 import { useEffect, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { MeasurementData } from "@/types/measurement";
 import svgUrl from "@/assets/anatomic-measurements.svg";
+import { MEASUREMENTS_FORM_INPUT_IDS as inputIds } from "./MeasurementsIds";
+import { ARRAY_MEASUREMENTS_INPUT_IDS as inputIdsArray } from "./MeasurementsIds";
+import { getSvgId, updateSvgText } from "@/utils/svgUtils";
 
-/** Measurement data structure */
-type MeasurementData = {
-  /** Neck diameter in mm */
-  neckDiameter: string;
-  /** Contralateral iliac diameter in mm */
-  contralateralDiameter: string;
-  /** Ipsilateral iliac diameter in mm */
-  ipsilateralDiameter: string;
-  /** Distance to contralateral iliac in mm */
-  contralateralDistance: string;
-  /** Distance to ipsilateral iliac in mm */
-  ipsilateralDistance: string;
-};
+
 
 /** Props for AnatomicalDiagram component */
 type AnatomicalDiagramProps = {
@@ -28,6 +20,7 @@ type AnatomicalDiagramProps = {
  * Renders an SVG visualization of aortic aneurysm with measurement overlays
  */
 const AnatomicalDiagram = ({ measurements }: AnatomicalDiagramProps) => {
+  
   const { t } = useTranslation();
   const svgContainerRef = useRef<HTMLDivElement>(null);
   const svgContentRef = useRef<string>("");
@@ -37,114 +30,126 @@ const AnatomicalDiagram = ({ measurements }: AnatomicalDiagramProps) => {
    * @param event - Input change event
    */
   const updateImageLabel = useCallback((event: Event) => {
+   
     const inputField = event.target as HTMLInputElement;
-    if (!inputField || !svgContainerRef.current) return;
-
-    const IMG_VALUE_SUFFIX = "__imgValue";
-    let svgElementId = inputField.id + IMG_VALUE_SUFFIX;
     
-    // Handle special cases where input ID differs from SVG element ID
-    if (inputField.id === "contralateralDiameter") {
-      svgElementId = "contralateralIliacDiameter__imgValue";
-    } else if (inputField.id === "ipsilateralDiameter") {
-      svgElementId = "ipsilateralIliacDiameter__imgValue";
+    // Ensure input field and SVG container are available
+    if ( !inputField || !svgContainerRef.current )
+    {  
+      return;
     }
 
-    const imageLabel = svgContainerRef.current.querySelector(`#${svgElementId}`);
-    if (imageLabel) {
-      imageLabel.textContent = inputField.value;
-    }
+    // Get the SVG element from the container
+    const svg = svgContainerRef.current.querySelector('svg') as SVGSVGElement | null;
+
+    // Update the text element in the SVG corresponding to the changed input field
+    updateSvgText( svg, inputField.id, inputField.value );
+
   }, []);
 
   /**
    * Loads and injects SVG content into the DOM
    */
   useEffect(() => {
-    const loadSvg = async () => {
-      try {
-        const response = await fetch(svgUrl);
-        const svgText = await response.text();
-        svgContentRef.current = svgText;
-        
-        if (svgContainerRef.current) {
-          svgContainerRef.current.innerHTML = svgText;
-          
-          // Initialize with current input values
-          const inputIds = [
-            'neckDiameter',
-            'contralateralDiameter',
-            'ipsilateralDiameter',
-            'contralateralDistance',
-            'ipsilateralDistance'
-          ];
 
-          inputIds.forEach(id => {
+    // Fetch and load the SVG content
+    const loadSvg = async () => {
+      
+      try 
+      {
+        // Fetch SVG file as text and store in ref to avoid re-fetching
+        const response = await fetch(svgUrl);
+        const rawSvg = await response.text();
+        svgContentRef.current = rawSvg;
+        
+        if ( svgContainerRef.current ) 
+        {
+          // Inject SVG into container
+          svgContainerRef.current.innerHTML = rawSvg;
+
+          // Trigger update for each input to set initial SVG labels values
+          inputIdsArray.forEach( id => {
+            
+            // Simulate input event to update SVG labels
             const inputElement = document.getElementById(id) as HTMLInputElement;
-            if (inputElement) {
+            
+            // Trigger update if input element exists
+            if ( inputElement )
+            {
               const event = new Event('input', { bubbles: true });
               Object.defineProperty(event, 'target', { value: inputElement, writable: false });
               updateImageLabel(event);
             }
           });
         }
-      } catch (error) {
+      } 
+      catch( error )
+      {
         console.error('Error loading SVG:', error);
       }
     };
 
     loadSvg();
-  }, [updateImageLabel]);
+  }, [ updateImageLabel ]);
 
   /**
    * Sets up event listeners for input fields
    */
   useEffect(() => {
-    const inputIds = [
-      'neckDiameter',
-      'contralateralDiameter',
-      'ipsilateralDiameter',
-      'contralateralDistance',
-      'ipsilateralDistance'
-    ];
 
-    inputIds.forEach(id => {
+    // Attach input event listeners to form fields
+    inputIdsArray.forEach(id => {
+
       const inputElement = document.getElementById(id);
-      if (inputElement) {
+      
+      if( inputElement ) 
+      {
         inputElement.addEventListener('input', updateImageLabel);
       }
     });
 
     // Cleanup event listeners
     return () => {
-      inputIds.forEach(id => {
+      inputIdsArray.forEach(id => {
         const inputElement = document.getElementById(id);
-        if (inputElement) {
+        
+        if( inputElement )
+        {
           inputElement.removeEventListener('input', updateImageLabel);
         }
       });
     };
-  }, [updateImageLabel]);
+  }, [ updateImageLabel ]);
 
   /**
    * Updates measurement values in the SVG when measurements prop changes
    */
   useEffect(() => {
-    if (!svgContainerRef.current || !measurements) return;
+    
+    // Ensure SVG container and measurements data are available
+    if( !svgContainerRef.current || !measurements )
+    { 
+      return;
+    }
 
     // Update text elements with measurement values
-    const neckDiameterEl = svgContainerRef.current.querySelector('#neckDiameter__imgValue');
-    const contralateralDiameterEl = svgContainerRef.current.querySelector('#contralateralIliacDiameter__imgValue');
-    const ipsilateralDiameterEl = svgContainerRef.current.querySelector('#ipsilateralIliacDiameter__imgValue');
-    const contralateralDistanceEl = svgContainerRef.current.querySelector('#contralateralDistance__imgValue');
-    const ipsilateralDistanceEl = svgContainerRef.current.querySelector('#ipsilateralDistance__imgValue');
+    const svg = svgContainerRef.current.querySelector('svg') as SVGSVGElement | null;
 
-    if (neckDiameterEl) neckDiameterEl.textContent = measurements.neckDiameter;
-    if (contralateralDiameterEl) contralateralDiameterEl.textContent = measurements.contralateralDiameter;
-    if (ipsilateralDiameterEl) ipsilateralDiameterEl.textContent = measurements.ipsilateralDiameter;
-    if (contralateralDistanceEl) contralateralDistanceEl.textContent = measurements.contralateralDistance;
-    if (ipsilateralDistanceEl) ipsilateralDistanceEl.textContent = measurements.ipsilateralDistance;
-  }, [measurements]);
-  
+    // Check if SVG is loaded correctly
+    if( !svg )
+    {
+      return;
+    }
+
+    // Update each measurement in the SVG
+    updateSvgText( svg, inputIds.neckDiameter, measurements.neckDiameter );
+    updateSvgText( svg, inputIds.contralateralDiameter, measurements.contralateralDiameter );
+    updateSvgText( svg, inputIds.ipsilateralDiameter, measurements.ipsilateralDiameter );
+    updateSvgText( svg, inputIds.contralateralDistance, measurements.contralateralDistance );
+    updateSvgText( svg, inputIds.ipsilateralDistance, measurements.ipsilateralDistance );
+
+  }, [ measurements ]);
+
   return (
     <Card className="w-full shadow-glass backdrop-blur-glass animate-slide-up" style={{ animationDelay: "0.1s" }}>
       <CardHeader>
