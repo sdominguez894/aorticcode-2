@@ -22,12 +22,25 @@ const MeasurementForm = ( { onCalculate }: MeasurementFormProps ) => {
   
   const { t } = useTranslation();
   
+  /**
+   * Determines if the calculate button should be enabled or not
+   */
+  const isCalculateButtonEnabled = () => {
+      
+    // Check if all measurement fields are filled
+    const isEnabled = Object.values( measurements )
+                            .every( (measurement) => measurement.trim() !== '' );
+    
+    return isEnabled;
+  };
+
   const [measurements, setMeasurements] = useState<MeasurementData>({
     neckDiameter: "24.5",
     contralateralDiameter: "18.0",
     ipsilateralDiameter: "16.5",
     contralateralDistance: "150",
     ipsilateralDistance: "145",
+
   });
 
   /**
@@ -78,6 +91,7 @@ const MeasurementForm = ( { onCalculate }: MeasurementFormProps ) => {
                 id="neckDiameter"
                 type="number"
                 step="0.1"
+                min="0"
                 value={measurements.neckDiameter}
                 onChange={(e) => handleInputChange("neckDiameter", e.target.value)}
                 placeholder="24.5"
@@ -97,6 +111,7 @@ const MeasurementForm = ( { onCalculate }: MeasurementFormProps ) => {
                 id="contralateralDiameter"
                 type="number"
                 step="0.1"
+                min="0"
                 value={measurements.contralateralDiameter}
                 onChange={(e) => handleInputChange("contralateralDiameter", e.target.value)}
                 placeholder="18.0"
@@ -116,6 +131,7 @@ const MeasurementForm = ( { onCalculate }: MeasurementFormProps ) => {
                 id="ipsilateralDiameter"
                 type="number"
                 step="0.1"
+                min="0"
                 value={measurements.ipsilateralDiameter}
                 onChange={(e) => handleInputChange("ipsilateralDiameter", e.target.value)}
                 placeholder="16.5"
@@ -135,6 +151,7 @@ const MeasurementForm = ( { onCalculate }: MeasurementFormProps ) => {
                 id="contralateralDistance"
                 type="number"
                 step="0.1"
+                min="0"
                 value={measurements.contralateralDistance}
                 onChange={(e) => handleInputChange("contralateralDistance", e.target.value)}
                 placeholder="150"
@@ -154,6 +171,7 @@ const MeasurementForm = ( { onCalculate }: MeasurementFormProps ) => {
                 id="ipsilateralDistance"
                 type="number"
                 step="0.1"
+                min="0"
                 value={measurements.ipsilateralDistance}
                 onChange={(e) => handleInputChange("ipsilateralDistance", e.target.value)}
                 placeholder="145"
@@ -166,14 +184,17 @@ const MeasurementForm = ( { onCalculate }: MeasurementFormProps ) => {
             </div>
           </div>
 
-          <Button
-            type="submit"
-            size="lg"
-            className="w-full bg-gradient-primary hover:opacity-90 transition-all transform hover:scale-[1.02]"
-          >
-            <Calculator className="mr-2 h-5 w-5" />
-            {t('form.calculateButton')}
-          </Button>
+            <Button type="submit"
+                    size="lg"
+                    disabled={!isCalculateButtonEnabled()}
+                    className={ `w-full transition-all bg-gradient-to-r 
+                                 ${ isCalculateButtonEnabled() ? 'from-blue-500 to-indigo-500 hover:opacity-90 hover:scale-[1.02]'
+                                                               : 'from-gray-300 to-gray-400 opacity-60 cursor-not-allowed' }`
+                              }
+                    >
+              <Calculator className="mr-2 h-5 w-5" />
+              {t('form.calculateButton')}
+            </Button>
         </form>
       </CardContent>
     </Card>
